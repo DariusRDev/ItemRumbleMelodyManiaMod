@@ -40,7 +40,6 @@ public class ItemActions : INeedInjection
 
     public void AnimateItemCollection(ItemControl itemControl)
     {
-        Debug.Log($"GameObject: {gameObject.name}, ItemControl: {itemControl.Item.Name}");
         // TriggerSparklyExplosion(itemControl.VisualElement.transform.position);
         // TODO: Help Wanted
         itemControl.VisualElement.RemoveFromHierarchy();

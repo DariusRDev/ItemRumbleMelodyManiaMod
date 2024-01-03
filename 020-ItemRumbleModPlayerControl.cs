@@ -108,10 +108,27 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     private void OnCreatedTargetNoteControl(TargetNoteControl targetNoteControl, PlayerControl playerControl)
     {
-        int pointsOfPlayer = playerControl.PlayerScoreControl.ModTotalScore;
-        int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.ModTotalScore);
-        int pointsToFirstPlace = pointsOfPlayerInFirst - pointsOfPlayer;
-        Debug.Log($"Point to First Place: {pointsToFirstPlace}");
+        int pointsOfPlayer = playerControl.PlayerScoreControl.scoreData.TotalScore;
+        int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.scoreData.TotalScore);
+        int pointsToFirstPlace = Math.Abs(pointsOfPlayerInFirst - pointsOfPlayer);
+
+        if (pointsOfPlayer < 10) // Don't spawn items if the player is too far behind
+        {
+            return;
+        }
+        int noteLengthInMilliseconds = (int)(targetNoteControl.Note.Length * 60000 / singSceneControl.SongMeta.BeatsPerMinute);
+        Debug.Log($"noteLengthInMilliseconds: {noteLengthInMilliseconds}");
+        if (noteLengthInMilliseconds < 150) // Don't spawn items if the note is too short
+        {
+            return;
+        }
+
+        bool spawnItem = UnityEngine.Random.Range(0, 4) == 0;
+        if (!spawnItem) // Only spawn items in 25% of the cases
+        {
+            return;
+        }
+
         Item item = Items.SpawnItem(pointsToFirstPlace);
         ItemControl itemControl = new ItemControl(modFolder, targetNoteControl, item);
         itemControls.Add(itemControl);

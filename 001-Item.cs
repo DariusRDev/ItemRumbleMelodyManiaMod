@@ -3,23 +3,24 @@ using System.Collections.Generic;
 
 public class Item
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get; set; } = "";
+    public string Description { get; set; } = "";
 
-    public string VisualElementName { get; set; }
+    public string VisualElementName { get; set; } = "";
 
-    public string ImagePath { get; set; }
+    public string ImagePath { get; set; } = "";
 
     // Has to be object, because of loading order of cs files.
-    public Action<object, object> OnCollectAction { get; set; }
+    public Action<object, object> OnCollectAction { get; set; } = (object itemActionsObject, object itemControlObject) => { };
 
     // Dictionary to store spawn probability thresholds and probabilities
-    public Dictionary<int, float> SpawnProbabilities { get; set; }
+    public Dictionary<int, float> SpawnProbabilities { get; set; } = new Dictionary<int, float>();
 
 
-    public Item(string name)
+    public Item(string name, string description = "")
     {
         Name = name;
+        Description = description;
 
     }
 

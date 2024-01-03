@@ -31,7 +31,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod
     public VisualElement CreateConfigurationVisualElement()
     {
 
-
         var visualElement = new VisualElement();
         var label = new Label("Item Rumble Mod Settings");
         label.style.fontSize = 10;
@@ -43,9 +42,9 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
         divider.style.backgroundColor = grey; //grey
         visualElement.Add(divider);
-
         foreach (Item item in Items.AllItems)
         {
+
 
             // create a checkbox for each item
             IModSettingControl checkbox = new BoolModSettingControl(() => activeItems.Contains(item), newValue =>
@@ -69,12 +68,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod
             itemDivider.style.backgroundColor = grey; //grey
             visualElement.Add(itemDivider);
         }
-
-        // divider:
-
-
-
-
 
 
         return visualElement;
