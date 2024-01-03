@@ -9,7 +9,8 @@ The Item Rumble Mod adds items to the game that appear on notes with different e
 
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/c6a0c36e-4296-4051-bc55-579d7f2b3fbb)
 
-![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/8aa48ee8-2b3c-4b24-a1c5-b0fcd0424258)
+![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/b4b50ee4-8263-4a2d-a3ef-f8cc22a68c57)
+
 
 Contributions are welcome, especially for animations, as I am not proficient in that area.
 
