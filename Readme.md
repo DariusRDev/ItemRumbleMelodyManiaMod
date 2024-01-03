@@ -7,6 +7,9 @@ Please note that this mod is currently under development and is not intended for
 ## Features
 The Item Rumble Mod adds items to the game that appear on notes with different effects and can be collected. It is designed to be easily extendable, allowing you to add new items by adding PNG images to the images folder and adding the item details in the Items.cs file (name, imagePath, onCollect method). Custom behaviors can be implemented in the ItemActions.cs file, such as adding points.
 
+![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/c6a0c36e-4296-4051-bc55-579d7f2b3fbb)
+
+![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/8aa48ee8-2b3c-4b24-a1c5-b0fcd0424258)
 
 Contributions are welcome, especially for animations, as I am not proficient in that area.
 
