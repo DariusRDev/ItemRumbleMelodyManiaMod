@@ -14,6 +14,17 @@
     margin-top: -8px;
 }
 
+#shellCollectorItem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+
 #itemCountContainer {
     position: absolute;
     top: 70%;

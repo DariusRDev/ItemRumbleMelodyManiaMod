@@ -55,7 +55,7 @@ public static class Items
     {
         Description = "Deducts 500 Points from the player in first place",
         ImagePath = "images/items/shells/blue_shell.png",
-        VisualElementName = "itemCollectorItem",
+        VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
         OnCollectAction = (object itemActionsObject, object itemControlObject) =>
         {
@@ -74,7 +74,7 @@ public static class Items
     {
         Description = "Deducts 50 points from a random player",
         ImagePath = "images/items/shells/green_shell.png",
-        VisualElementName = "itemCollectorItem",
+        VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
         OnCollectAction = (object itemActionsObject, object itemControlObject) =>
         {
@@ -93,7 +93,7 @@ public static class Items
     {
         Description = "Deducts 50 points the player in front of you",
         ImagePath = "images/items/shells/red_shell.png",
-        VisualElementName = "itemCollectorItem",
+        VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
         OnCollectAction = (object itemActionsObject, object itemControlObject) =>
         {
