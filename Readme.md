@@ -18,9 +18,6 @@ The items could be similar to those in the popular game Mario Kart:
 
 - **Rocket (Bullet Bill)**: Automatically hits all notes for a short period of time.
 - **Mushroom**: Grants an instant 300 point bonus.
-- **Red Shell**: Deducts 100 points from the player with the highest score.
-- **Green Shell**: Deducts 50 points from a random player.
-- **Blue Shell**: Deducts 300 points from the player in first place.
 - **Banana**: Deducts 40 points from the player who collected the item.
 - **Star**: Plays the song at 1.3x speed for a short period of time.
 - **Golden Mushroom**: Grants a points multiplier for a short period of time.
@@ -30,6 +27,7 @@ The items could be similar to those in the popular game Mario Kart:
 This mode will add a fun and competitive element to MelodyMania, making it more enjoyable for players who want a more dynamic experience.
 
 At the moment coins and bananas are implemented, with coins giving 100 points and bananas deducting 50 points.
+The Shells dont have their functionality Yet
 
 # Documentation
 
