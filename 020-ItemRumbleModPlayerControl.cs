@@ -16,6 +16,9 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
     private GameObject gameObject;
 
     [Inject]
+    private SingSceneControl singSceneControl;
+
+    [Inject]
     private PlayerControl playerControl;
 
     [Inject]
@@ -105,12 +108,11 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     private void OnCreatedTargetNoteControl(TargetNoteControl targetNoteControl, PlayerControl playerControl)
     {
-        Item item = Items.Coin;
-        bool hasItem = UnityEngine.Random.Range(0, 10) < 5;
-        if (!hasItem)
-        {
-            item = Items.Banana;
-        }
+        int pointsOfPlayer = playerControl.PlayerScoreControl.ModTotalScore;
+        int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.ModTotalScore);
+        int pointsToFirstPlace = pointsOfPlayerInFirst - pointsOfPlayer;
+        Debug.Log($"Point to First Place: {pointsToFirstPlace}");
+        Item item = Items.SpawnItem(pointsToFirstPlace);
         ItemControl itemControl = new ItemControl(modFolder, targetNoteControl, item);
         itemControls.Add(itemControl);
     }

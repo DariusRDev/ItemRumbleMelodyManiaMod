@@ -3,6 +3,8 @@ using System;
 public class Item
 {
     public string Name { get; private set; }
+    public string Description { get; private set; }
+
     public string VisualElementName { get; private set; }
 
     public string ImagePath { get; private set; }
@@ -11,9 +13,10 @@ public class Item
     public Action<object, object> CustomAction { get; private set; }
 
 
-    public Item(string name, string imagePath, string visualElementName, Action<object, object> customAction)
+    public Item(string name, string description, string imagePath, string visualElementName, Action<object, object> customAction)
     {
         Name = name;
+        Description = description;
         VisualElementName = visualElementName;
         ImagePath = imagePath;
         CustomAction = customAction;
@@ -24,6 +27,8 @@ public class Item
     {
         CustomAction?.Invoke(itemActions, itemControl);
     }
+
+
 
     public override string ToString()
     {

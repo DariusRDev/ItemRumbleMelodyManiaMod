@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public static class Items
 {
     // Has to be object, because of loading order of cs files.
-    public static readonly Item Coin = new Item("Coin", "images/items/coins/Gold_1.png", "itemCollectorItem", (object itemActionsObject, object itemControlObject) =>
+    public static readonly Item Coin = new Item("Coin", "Adds 100 Points", "images/items/coins/Gold_1.png", "itemCollectorItem", (object itemActionsObject, object itemControlObject) =>
     {
         // Cast the object to the correct type.
         var itemActions = (ItemActions)itemActionsObject;
@@ -15,7 +15,7 @@ public static class Items
     });
 
     // Has to be object, because of loading order of cs files.
-    public static readonly Item Banana = new Item("Banana", "images/items/banana/fruit_banana.png", "itemCollectorItem", (object itemActionsObject, object itemControlObject) =>
+    public static readonly Item Banana = new Item("Banana", "Subtracts 50 Points", "images/items/banana/fruit_banana.png", "itemCollectorItem", (object itemActionsObject, object itemControlObject) =>
     {
 
         // Cast the object to the correct type.
@@ -33,4 +33,22 @@ public static class Items
         Coin,
         Banana
     };
+
+    /**
+     * Returns a random item based on the pointsToFirstPlace.
+     */
+    public static Item SpawnItem(int pointsToFirstPlace)
+    {
+        return Banana;
+
+        /* if (pointsToFirstPlace < 0)
+        {
+            return Banana;
+        }
+        else
+        {
+            return Banana;
+        } */
+        //return AllItems[UnityEngine.Random.Range(0, AllItems.Count)];
+    }
 }
