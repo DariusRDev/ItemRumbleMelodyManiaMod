@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class Items
 {
+    private static readonly Dictionary<int, float> CoinSpawnProbabilities = new Dictionary<int, float> { { 0, 10 }, { 10, 105 }, { 200, 110 }, { 250, 115 }, { 300, 120 }, { 350, 125 }, { 400, 130 }, { 450, 135 }, { 500, 140 }, { 550, 145 }, { 600, 150 }, { 650, 155 }, { 700, 160 }, { 750, 165 }, { 800, 170 }, { 1000, 200 } };
+    private static readonly Dictionary<int, float> BananaSpawnProbabilities = new Dictionary<int, float> { { 0, 190 }, { 10, 95 }, { 200, 90 }, { 250, 85 }, { 300, 80 }, { 350, 75 }, { 400, 70 }, { 450, 65 }, { 500, 60 }, { 550, 55 }, { 600, 50 }, { 650, 45 }, { 700, 40 }, { 750, 35 }, { 800, 30 }, { 1000, 0 } };
+
+
     // Has to be object, because of loading order of cs files.
     public static readonly Item Coin = new Item("Coin")
     {
@@ -22,8 +26,7 @@ public static class Items
            itemActions.AnimateItemCollection(itemControl);
        },
         // Get Dictionary from excel sheet
-        SpawnProbabilities = { { 0, 100 }, { 150, 105 }, { 200, 110 }, { 250, 115 }, { 300, 120 }, { 350, 125 }, { 400, 130 }, { 450, 135 }, { 500, 140 }, { 550, 145 }, { 600, 150 }, { 650, 155 }, { 700, 160 }, { 750, 165 }, { 800, 170 }, { 1000, 200 } }
-
+        SpawnProbabilities = CoinSpawnProbabilities
     };
 
     public static readonly Item Banana = new Item("Banana")
@@ -43,8 +46,7 @@ public static class Items
             itemActions.AnimateItemCollection(itemControl);
         },
         // Get Dictionary from excel sheet
-        SpawnProbabilities = { { 0, 100 }, { 150, 95 }, { 200, 90 }, { 250, 85 }, { 300, 80 }, { 350, 75 }, { 400, 70 }, { 450, 65 }, { 500, 60 }, { 550, 55 }, { 600, 50 }, { 650, 45 }, { 700, 40 }, { 750, 35 }, { 800, 30 }, { 1000, 0 } }
-
+        SpawnProbabilities = BananaSpawnProbabilities
     };
 
 
