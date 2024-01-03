@@ -24,23 +24,12 @@ public class ItemActions : INeedInjection
     {
         if (points < 0 && playerControl.PlayerScoreControl.ModTotalScore < Mathf.Abs(points))
         {
-            points = -playerControl.PlayerScoreControl.ModTotalScore;
             return;
         }
-        else
-        {
-
-            playerControl.PlayerScoreControl.ModTotalScore += points;
-        }
-
+        playerControl.PlayerScoreControl.ModTotalScore += points;
         playerControl.PlayerUiControl.ShowTotalScore(playerControl.PlayerScoreControl.TotalScore);
 
         Debug.Log($"Added {points} points to score of player '{playerControl.PlayerProfile?.Name}'");
-
-        // Highlight with Animation
-
-        /*         AnimationUtils.BounceVisualElementSize(gameObject, itemCountContainer, 1.5f);
-         */
     }
 
     public void BouncePlayerScoreLabel(float scale = 1.5f)
