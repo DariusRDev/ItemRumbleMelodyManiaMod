@@ -7,10 +7,11 @@ public class Item
 
     public string ImagePath { get; private set; }
 
-    public Action<ItemActions> CustomAction { get; private set; }
+    // Has to be object, because of loading order of cs files.
+    public Action<object, object> CustomAction { get; private set; }
 
 
-    public Item(string name, string imagePath, string visualElementName, Action<ItemActions> customAction)
+    public Item(string name, string imagePath, string visualElementName, Action<object, object> customAction)
     {
         Name = name;
         VisualElementName = visualElementName;
@@ -18,9 +19,10 @@ public class Item
         CustomAction = customAction;
     }
 
-    public void OnCollect(ItemActions itemActions)
+    // Has to be object, because of loading order of cs files.
+    public void OnCollect(object itemActions, object itemControl)
     {
-        CustomAction?.Invoke(itemActions);
+        CustomAction?.Invoke(itemActions, itemControl);
     }
 
     public override string ToString()

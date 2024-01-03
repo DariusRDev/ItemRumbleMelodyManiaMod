@@ -8,3 +8,5 @@ authors:
 # Additional assemblies from the app domain that need to be accessed by your mod.
 requiredAssemblies:
   - UnityEngine.VideoModule
+  - UnityEngine.ParticleSystemModule
+  - com.achimmihca.scenechangeanimations

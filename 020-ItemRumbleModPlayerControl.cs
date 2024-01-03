@@ -113,11 +113,11 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
             return;
         }
 
-        itemControl.VisualElement.RemoveFromHierarchy();
+
         itemControls.Remove(itemControl);
 
 
-        itemControl.Item.OnCollect(itemActions);
+        itemControl.Item.OnCollect(itemActions, itemControl);
 
         /* UpdateItemsLabel(); */
     }

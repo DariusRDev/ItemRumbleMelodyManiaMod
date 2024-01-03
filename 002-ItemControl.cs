@@ -22,3 +22,4 @@ public class ItemControl
         targetNoteControl.VisualElement.Add(visualElement);
     }
 }
+
