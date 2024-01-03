@@ -52,29 +52,8 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         itemActions = new ItemActions();
         injector.Inject(itemActions);
 
-        /*   CreateItemsLabel(); */
     }
 
-    /*    private void CreateItemsLabel()
-       {
-           itemCountContainer = new VisualElement();
-           itemCountContainer.name = "itemCountContainer";
-           ImageManager.LoadSpriteFromUri($"{modFolder}/images/items/coins/Gold_1.png")
-               .Subscribe(sprite => itemCountContainer.style.backgroundImage = new StyleBackground(sprite));
-
-           itemCountLabel = new Label();
-           itemCountLabel.name = "itemCountLabel";
-           itemCountContainer.Add(itemCountLabel);
-           UpdateItemsLabel();
-
-           playerImage.Add(itemCountContainer);
-       }
-   
-    private void UpdateItemsLabel()
-    {
-        itemCountLabel.text = $"{collectedItemCountSinceLastBonus}";
-    }
-     */
 
     public void Update()
     {
@@ -122,20 +101,7 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         /* UpdateItemsLabel(); */
     }
 
-    /*  private void GiveItemBonusPoints()
-     {
-         collectedItemCountSinceLastBonus -= CollectedItemCountBonusThreshold;
-         playerControl.PlayerScoreControl.ModTotalScore += 100;
-         playerControl.PlayerUiControl.ShowTotalScore(playerControl.PlayerScoreControl.TotalScore);
 
-         Debug.Log($"Added 100 points to score of player '{playerControl.PlayerProfile?.Name}'");
-
-         // Highlight with Animation
-
-         //AnimationUtils.BounceVisualElementSize(gameObject, itemCountContainer, 1.5f);
-
-         AnimationUtils.BounceVisualElementSize(gameObject, playerScoreLabel, 1.5f);
-     } */
 
     private void OnCreatedTargetNoteControl(TargetNoteControl targetNoteControl, PlayerControl playerControl)
     {
