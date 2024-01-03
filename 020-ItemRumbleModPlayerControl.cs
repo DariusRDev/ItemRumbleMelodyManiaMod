@@ -112,10 +112,10 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.scoreData.TotalScore);
         int pointsToFirstPlace = Math.Abs(pointsOfPlayerInFirst - pointsOfPlayer);
 
-        if (pointsOfPlayer < 10) // Don't spawn items if the player is too far behind
+        /* if (pointsOfPlayer < 10) // Don't spawn items if the player is too far behind
         {
             return;
-        }
+        } */
         int noteLengthInMilliseconds = (int)(targetNoteControl.Note.Length * 60000 / singSceneControl.SongMeta.BeatsPerMinute);
         Debug.Log($"noteLengthInMilliseconds: {noteLengthInMilliseconds}");
         if (noteLengthInMilliseconds < 150) // Don't spawn items if the note is too short
