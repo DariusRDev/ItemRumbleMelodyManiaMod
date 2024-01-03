@@ -1,31 +1,32 @@
 using System;
+using System.Collections.Generic;
 
 public class Item
 {
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
 
-    public string VisualElementName { get; private set; }
+    public string VisualElementName { get; set; }
 
-    public string ImagePath { get; private set; }
+    public string ImagePath { get; set; }
 
     // Has to be object, because of loading order of cs files.
-    public Action<object, object> CustomAction { get; private set; }
+    public Action<object, object> OnCollectAction { get; set; }
+
+    // Dictionary to store spawn probability thresholds and probabilities
+    public Dictionary<int, float> SpawnProbabilities { get; set; }
 
 
-    public Item(string name, string description, string imagePath, string visualElementName, Action<object, object> customAction)
+    public Item(string name)
     {
         Name = name;
-        Description = description;
-        VisualElementName = visualElementName;
-        ImagePath = imagePath;
-        CustomAction = customAction;
+
     }
 
     // Has to be object, because of loading order of cs files.
     public void OnCollect(object itemActions, object itemControl)
     {
-        CustomAction?.Invoke(itemActions, itemControl);
+        OnCollectAction?.Invoke(itemActions, itemControl);
     }
 
 
