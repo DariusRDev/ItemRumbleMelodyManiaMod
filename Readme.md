@@ -2,7 +2,9 @@
 
 ## Disclaimer
 
-Please note that this mod is currently under development and is not intended for gameplay yet. The `item spawn probabilities based on player rank` have not been implemented, and the gameplay experience may not be enjoyable at this stage.
+Please note that this mod is currently under development and is not intended for gameplay yet. The `item spawn probabilities based on player rank` have not been balanced, and the gameplay experience may not be enjoyable at this stage.
+The Shells *dont work as expected*
+The deactivation of Items has to be implemented  
 
 ## Features
 The Item Rumble Mod adds items to the game that appear on notes with different effects and can be collected. It is designed to be easily extendable, allowing you to add new items by adding PNG images to the images folder and adding the item details in the Items.cs file (name, imagePath, onCollect method). Custom behaviors can be implemented in the ItemActions.cs file, such as adding points.
