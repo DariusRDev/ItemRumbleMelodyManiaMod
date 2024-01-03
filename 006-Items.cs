@@ -56,6 +56,42 @@ public static class Items
      */
     public static Item SpawnItem(int pointsToFirstPlace)
     {
-        return Banana;
+
+        Dictionary<Item, int> itemProbabilities = new Dictionary<Item, int>();
+        foreach (Item item in AllItems)
+        {
+            // find nearest key in dictionary
+            int nearestKey = 0;
+            foreach (int key in item.SpawnProbabilities.Keys)
+            {
+                if (Math.Abs(key - pointsToFirstPlace) < Math.Abs(nearestKey - pointsToFirstPlace))
+                {
+                    nearestKey = key;
+                }
+            }
+
+            int probability = (int)item.SpawnProbabilities[nearestKey];
+            itemProbabilities.Add(item, probability);
+
+        }
+
+        // monte carlo method
+        int sum = 0;
+        foreach (int probability in itemProbabilities.Values)
+        {
+            sum += probability;
+        }
+        int randomValue = UnityEngine.Random.Range(0, sum);
+        int currentSum = 0;
+        foreach (Item item in itemProbabilities.Keys)
+        {
+            currentSum += itemProbabilities[item];
+            if (randomValue < currentSum)
+            {
+                return item;
+            }
+        }
+
+        return Coin;
     }
 }

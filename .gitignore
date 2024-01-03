@@ -5,3 +5,5 @@ obj/
 
 # Ignore Unity meta files
 *.meta
+
+$*

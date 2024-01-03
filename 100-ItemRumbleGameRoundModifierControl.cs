@@ -31,11 +31,11 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
         uiDocument.rootVisualElement.styleSheets.Add(styleSheet);
     }
 
-    /*     private void Update()
-        {
-            itemRumblePlayerControls.ForEach(it => it.Update());
-        }
-     */
+    private void Update()
+    {
+        itemRumblePlayerControls.ForEach(it => it.Update());
+    }
+
 
 
     private void CreateItemCollectorControl(PlayerControl playerControl)
