@@ -1,13 +1,16 @@
 # Item Rumble Mod
 
-## Disclaimer
-
-Please note that this mod is currently under development and is not intended for gameplay yet. The `item spawn probabilities based on player rank` have not been balanced, and the gameplay experience may not be enjoyable at this stage.
-The Shells *dont work as expected*
-The deactivation of Items has to be implemented  
-
 ## Features
 The Item Rumble Mod adds items to the game that appear on notes with different effects and can be collected. It is designed to be easily extendable, allowing you to add new items by adding PNG images to the images folder and adding the item details in the Items.cs file (name, imagePath, onCollect method). Custom behaviors can be implemented in the ItemActions.cs file, such as adding points.
+
+| Item Name | Description | Image |
+| --- | --- | --- |
+| Coin | Adds 100 Points | <img src="images/items/coins/Gold_1.png" width="100"> |
+| Coin | Adds 100 Points | ![Coin](images/items/coins/Gold_1.png) |
+| Banana | Subtracts 75 Points | ![Banana](images/items/banana/fruit_banana.png)
+
+https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd
+https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/3035bf2b-fbd8-4599-9e96-ca0c2b795e33
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/b4b50ee4-8263-4a2d-a3ef-f8cc22a68c57)
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/da948896-3f0a-4d5a-be74-50caffa31efa)
 
@@ -19,12 +22,10 @@ Contributions are welcome, especially for animations, as I am not proficient in 
 The items could be similar to those in the popular game Mario Kart:
 
 - **Rocket (Bullet Bill)**: Automatically hits all notes for a short period of time.
-- **Mushroom**: Grants an instant 300 point bonus.
-- **Banana**: Deducts 40 points from the player who collected the item.
 - **Star**: Plays the song at 1.3x speed for a short period of time.
 - **Golden Mushroom**: Grants a points multiplier for a short period of time.
 - **Blooper**: Covers the screen with ink, making it difficult to see the lyrics and notes. This benefits players who know the song by heart.
-- **Lightning**: Mutes the music for a short period of time.
+
 
 This mode will add a fun and competitive element to MelodyMania, making it more enjoyable for players who want a more dynamic experience.
 
@@ -35,7 +36,11 @@ The Shells dont have their functionality Yet
 
 ## Installation
 1. Download the latest release `Source code (zip)` of the Skip Seconds Melody Mania Mod mod from the Releases page.
-2. Extract the downloaded ZIP file to a location of your choice.
+2. Extract the downloaded ZIP fi
+
+https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/50a3147b-dde9-43b8-bf93-e70c4c16cdfb
+
+le to a location of your choice.
 3. Mod folders are searched in a specific folder called the mods root folder.
 4. The mods root folder can be found by executing the command `mod.path` in the game's console (open via `F7`).
 5. To install a mod folder, copy it to the mods root folder
@@ -103,7 +108,7 @@ public static readonly List<Item> AllItems = new List<Item>()
 
 4. Implement the desired behavior for the item in the customAction delegate. This could involve adding or subtracting from the player's score, triggering animations, or any other game effects.
 5. If `itemActions` does not have the desired Effect implement it in `ItemActions.cs`
-
+6. Generate spawn Probabilities using the Excel sheet. (Scroll down to see generated C# Code)
 
 # Acknowledgements
 
