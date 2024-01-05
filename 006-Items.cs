@@ -123,6 +123,122 @@ public static class Items
         SpawnProbabilities = RedShelliSpawnProbabilities
     };
 
+    public static readonly Item Flashi = new Item("Flashi")
+    {
+        Description = "Mutes audio for 2 seconds",
+        ImagePath = "images/items/lightning.png",
+        VisualElementName = "itemCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+        {
+            // Cast the object to the correct type.
+            var itemActions = (ItemActions)itemActionsObject;
+            var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+            // Add Actions here.
+            itemActions.AddScore(targetPlayerControl, -75);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-75 Banana");
+        },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = BananaSpawnProbabilities
+    };
+
+    public static readonly Item Ghosti = new Item("Ghosti")
+    {
+        Description = "Makes lyrics invisible for 5 seconds",
+        ImagePath = "images/items/ghost.png",
+        VisualElementName = "itemCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+        {
+            // Cast the object to the correct type.
+            var itemActions = (ItemActions)itemActionsObject;
+            var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+            // Add Actions here.
+            itemActions.AddScore(targetPlayerControl, -75);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-75 Banana");
+        },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = BananaSpawnProbabilities,
+    };
+
+    public static readonly Item Mushi = new Item("Mushi Mushroom")
+    {
+        Description = "Gives you 250 points",
+        ImagePath = "images/items/mushroom.png",
+        VisualElementName = "itemCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+        {
+            // Cast the object to the correct type.
+            var itemActions = (ItemActions)itemActionsObject;
+            var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+            // Add Actions here.
+            itemActions.AddScore(targetPlayerControl, 250);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "+250 Mushi Mushroom");
+        },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = BananaSpawnProbabilities,
+    };
+
+    public static readonly Item Rocki = new Item("Rocki Rocket")
+    {
+        Description = "Gives you 500 points",
+        ImagePath = "images/items/rocket.png",
+        VisualElementName = "itemCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+        {
+            // Cast the object to the correct type.
+            var itemActions = (ItemActions)itemActionsObject;
+            var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+            // Add Actions here.
+            itemActions.AddScore(targetPlayerControl, 500);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "+500 Rocki Rocket");
+        },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = BananaSpawnProbabilities,
+    };
+
+
+    public static readonly Item Stari = new Item("Stari")
+    {
+        Description = "Gives you 1000 points",
+        ImagePath = "images/items/star.png",
+        VisualElementName = "itemCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+        {
+            // Cast the object to the correct type.
+            var itemActions = (ItemActions)itemActionsObject;
+            var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+            // Add Actions here.
+            itemActions.AddScore(targetPlayerControl, 1000);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "+1000 Stari");
+        },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = BananaSpawnProbabilities,
+    };
+
+
+
+
+
+
 
     public static readonly List<Item> AllItems = new List<Item>()
     {
@@ -130,7 +246,12 @@ public static class Items
         Banana,
         BlueShelli,
         GreenShelli,
-        RedShelli
+        RedShelli,
+        Flashi,
+        Ghosti,
+        Mushi,
+        Rocki,
+        Stari
     };
 
     /**
