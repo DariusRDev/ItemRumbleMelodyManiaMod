@@ -26,6 +26,7 @@ In this mod, we've introduced dynamic item spawning based on your score distance
 
 ## Videos
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd
+
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/3035bf2b-fbd8-4599-9e96-ca0c2b795e33
 
 ## Screenshots
