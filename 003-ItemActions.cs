@@ -65,6 +65,32 @@ public class ItemActions : INeedInjection
         });
     }
 
+    public void ChangePlaybackSpeed(float seconds, float speedFactor = 1.5f)
+    {
+        LeanTween.value(singSceneControl.gameObject, 1f, speedFactor, 0.5f).setOnUpdate((float val) =>
+        {
+            singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+            singSceneControl.songVideoPlayer.PlaybackSpeed = val;
+        });
+
+        LeanTween.delayedCall(seconds, () =>
+        {
+            LeanTween.value(singSceneControl.gameObject, speedFactor, 1f, 0.5f).setOnUpdate((float val) =>
+            {
+                singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+                singSceneControl.songVideoPlayer.PlaybackSpeed = val;
+            });
+        });
+    }
+
+    public void HideNotesForSeconds(float seconds)
+    {
+        LeanTween.delayedCall(seconds + 1.6f, () =>
+        {
+            playerControl.PlayerUiControl.NoteDisplayer.FadeIn(0.8f);
+        });
+        playerControl.PlayerUiControl.NoteDisplayer.FadeOut(0.8f);
+    }
     public void BouncePlayerScoreLabel(PlayerControl targetPlayerControl, float scale = 1.5f)
     {
         AnimationUtils.BounceVisualElementSize(gameObject, getPlayerScoreLabel(targetPlayerControl), scale);
@@ -129,7 +155,6 @@ public class ItemActions : INeedInjection
                 return ve.Query<VisualElement>().Where(ves => ves.name == "playerScoreLabel").First();
             }
         }
-
         return playerScoreLabel;
 
     }
@@ -144,9 +169,9 @@ public class ItemActions : INeedInjection
         VisualElement label = new Label("      " + text);
 
         label.style.position = Position.Absolute;
-        // visualElement.style.unityBackgroundImageTintColor = new StyleColor(sentenceRatingColors[sentenceRating.EnumValue]);
-
-        Vector2 positionOfScore = playerScoreLabel.worldBound.position;
+        label.style.unityBackgroundImageTintColor = new StyleColor(Color.blue);
+        VisualElement targetPlayerScoreLabel = getPlayerScoreLabel(targetPlayerControll);
+        Vector2 positionOfScore = targetPlayerScoreLabel.worldBound.position;
         // Move the visual element to the background so that it is not affected by Parents layouting.
 
         singSceneControl.background.Add(label);
@@ -219,7 +244,7 @@ public class ItemActions : INeedInjection
         }).setEaseInSine().setOnComplete(() =>
         {
             visualElementToAnimate.style.top = endPosition.y;
-            LeanTween.delayedCall(0.8f, () =>
+            LeanTween.delayedCall(0.2f, () =>
             {
                 FadeOut(visualElementToAnimate, 0.2f, () =>
                 {

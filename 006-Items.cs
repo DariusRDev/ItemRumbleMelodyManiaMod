@@ -224,7 +224,7 @@ public static class Items
 
     public static readonly Item Stari = new Item("Stari")
     {
-        Description = "Gives you 1000 points",
+        Description = "Speeds up the song for 3 seconds",
         ImagePath = "images/items/star.png",
         VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
@@ -236,13 +236,62 @@ public static class Items
             // Get the PlayerControl of the affected player.
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
-            itemActions.AddScore(targetPlayerControl, 1000);
-            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "+1000 Stari");
+            itemActions.ChangePlaybackSpeed(3);
+            itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.8f, () =>
+             {
+                 itemActions.ShowItemRating(targetPlayerControl, "Stari Speed Up");
+             });
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = StariSpawnProbabilities,
     };
+
+    public static readonly Item Snaili = new Item("Snaili")
+    {
+        Description = "Slows down the song for 3 seconds",
+        ImagePath = "images/items/snaili.png",
+        VisualElementName = "shellCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+         {
+             // Cast the object to the correct type.
+             var itemActions = (ItemActions)itemActionsObject;
+             var itemControl = (ItemControl)itemControlObject;
+             // Get the PlayerControl of the affected player.
+             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+             // Add Actions here.
+             itemActions.ChangePlaybackSpeed(3, 0.5f);
+             itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.8f, () =>
+              {
+                  itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
+              });
+         },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = StariSpawnProbabilities,
+    };
+
+    public static readonly Item Eraser = new Item("Note Eraseri")
+    {
+        Description = "Hides the Notes of the Collecting Player for 5 seconds",
+        ImagePath = "images/items/eraser.png",
+        VisualElementName = "shellCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+         {
+             // Cast the object to the correct type.
+             var itemActions = (ItemActions)itemActionsObject;
+             var itemControl = (ItemControl)itemControlObject;
+             // Get the PlayerControl of the affected player.
+             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+             // Add Actions here.
+             itemActions.HideNotesForSeconds(5);
+             itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "Note Eraser");
+         },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = StariSpawnProbabilities,
+
+    };
+
 
 
     public static readonly List<Item> AllItems = new List<Item>()
@@ -256,7 +305,9 @@ public static class Items
         Ghosti,
         Mushi,
         Rocki,
-        Stari
+        Stari,
+        Snaili,
+        Eraser
     };
 
     /**

@@ -41,6 +41,9 @@ public class ItemRumbleModSceneMod : IGameRoundMod
         var label = new Label("Item Rumble Mod Settings");
         label.style.fontSize = 10;
         visualElement.Add(label);
+        var label2 = new Label("Consider Contributing to the Mod on Github!");
+        label2.style.fontSize = 7;
+        visualElement.Add(label2);
         StyleColor grey = new StyleColor();
         grey.value = new Color(0.5f, 0.5f, 0.5f, 1f);
         var divider = new VisualElement();
@@ -53,13 +56,9 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
             var row = new VisualElement();
             row.style.flexDirection = FlexDirection.Row;
-            var image = new VisualElement();
-            image.name = item.VisualElementName;
-            image.style.width = 25;
-            image.style.height = 25;
-            ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
-                .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
-            row.Add(image);
+            row.style.flexGrow = 1;
+            row.style.justifyContent = Justify.SpaceBetween;
+
             // create a checkbox for each item
             IModSettingControl checkbox = new BoolModSettingControl(() => activeItems.Contains(item.Name), newValue =>
             {
@@ -75,7 +74,13 @@ public class ItemRumbleModSceneMod : IGameRoundMod
             })
             { Label = item.Name };
             row.Add(checkbox.CreateVisualElement());
-
+            var image = new VisualElement();
+            image.name = item.VisualElementName;
+            image.style.width = 25;
+            image.style.height = 25;
+            ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
+                .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
+            row.Add(image);
             visualElement.Add(row);
 
             var itemLabel = new Label(item.Description);
