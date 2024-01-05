@@ -117,7 +117,6 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
             return;
         } */
         int noteLengthInMilliseconds = (int)(targetNoteControl.Note.Length * 60000 / singSceneControl.SongMeta.BeatsPerMinute);
-        Debug.Log($"noteLengthInMilliseconds: {noteLengthInMilliseconds}");
         if (noteLengthInMilliseconds < 150) // Don't spawn items if the note is too short
         {
             return;

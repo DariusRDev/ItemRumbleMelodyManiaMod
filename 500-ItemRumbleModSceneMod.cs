@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniInject;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UniRx;
 
 public class ItemRumbleModSceneMod : IGameRoundMod
 {
@@ -42,8 +43,23 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
         divider.style.backgroundColor = grey; //grey
         visualElement.Add(divider);
+
+
+
+
         foreach (Item item in Items.AllItems)
         {
+
+            var row = new VisualElement();
+            row.style.flexDirection = FlexDirection.Row;
+            var image = new VisualElement();
+            image.name = item.VisualElementName;
+            image.style.width = 25;
+            image.style.height = 25;
+            ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
+                .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
+
+            row.Add(image);
 
 
             // create a checkbox for each item
@@ -59,7 +75,10 @@ public class ItemRumbleModSceneMod : IGameRoundMod
                 }
             })
             { Label = item.Name };
-            visualElement.Add(checkbox.CreateVisualElement());
+            row.Add(checkbox.CreateVisualElement());
+
+            visualElement.Add(row);
+
             var itemLabel = new Label(item.Description);
             itemLabel.style.fontSize = 7;
             visualElement.Add(itemLabel);
