@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UniInject;
 using UnityEngine;
@@ -26,31 +27,30 @@ public class ItemActions : INeedInjection
     [Inject(Key = nameof(sentenceRatingUi))]
     private VisualTreeAsset sentenceRatingUi;
 
-    [Inject(UxmlName = R.UxmlNames.commonScoreSentenceRatingContainer)]
-    private VisualElement commonScoreSentenceRatingContainer;
 
-    public void AddScore(int points)
+    public void AddScore(PlayerControl targetPlayerControl, int points)
     {
-        if (points < 0 && playerControl.PlayerScoreControl.ModTotalScore < Mathf.Abs(points))
+        if (points < 0 && targetPlayerControl.PlayerScoreControl.ModTotalScore < Mathf.Abs(points))
         {
             return;
         }
-        playerControl.PlayerScoreControl.ModTotalScore += points;
-        playerControl.PlayerUiControl.ShowTotalScore(playerControl.PlayerScoreControl.TotalScore);
+        targetPlayerControl.PlayerScoreControl.ModTotalScore += points;
+        targetPlayerControl.PlayerUiControl.ShowTotalScore(targetPlayerControl.PlayerScoreControl.TotalScore);
 
-        Debug.Log($"Added {points} points to score of player '{playerControl.PlayerProfile?.Name}'");
+        Debug.Log($"Added {points} points to score of player '{targetPlayerControl.PlayerProfile?.Name}'");
     }
 
-    public void BouncePlayerScoreLabel(float scale = 1.5f)
+    public void BouncePlayerScoreLabel(PlayerControl targetPlayerControl, float scale = 1.5f)
     {
-        AnimationUtils.BounceVisualElementSize(gameObject, playerScoreLabel, scale);
+        AnimationUtils.BounceVisualElementSize(gameObject, getPlayerScoreLabel(targetPlayerControl), scale);
 
     }
 
-    public void AnimateItemCollection(ItemControl itemControl)
+    public void AnimateItemCollection(PlayerControl targetPlayerControl, ItemControl itemControl)
     {
 
-        singSceneControl.StartCoroutine(MoveToScore(itemControl.VisualElement, playerScoreLabel, 0.4f, () =>
+        // find in tree VisualElement == "playerScoreLabel"
+        singSceneControl.StartCoroutine(MoveToScore(itemControl.VisualElement, getPlayerScoreLabel(targetPlayerControl), 0.4f, () =>
         {
             singSceneControl.StartCoroutine(FadeOut(itemControl.VisualElement, 0.2f, () =>
             {
@@ -61,6 +61,54 @@ public class ItemActions : INeedInjection
 
 
     }
+
+    public PlayerControl GetRandomPlayerControl()
+    {
+        List<PlayerControl> playerControls = singSceneControl.PlayerControls;
+        return playerControls[UnityEngine.Random.Range(0, playerControls.Count)];
+    }
+
+    public PlayerControl GetFirstPlacePlayerControl()
+    {
+        List<PlayerControl> playerControls = singSceneControl.PlayerControls;
+        return playerControls.OrderByDescending(pc => pc.PlayerScoreControl.TotalScore).First();
+    }
+
+    public PlayerControl GetInFrontOfMePlayerControl()
+    {
+        List<PlayerControl> playerControls = singSceneControl.PlayerControls;
+        int myPoints = playerControl.PlayerScoreControl.TotalScore;
+        return playerControls
+                .Where(pc => pc.PlayerScoreControl.TotalScore > myPoints)
+                .OrderBy(pc => pc.PlayerScoreControl.TotalScore).First();
+    }
+
+    public PlayerControl GetMyPlayerControll()
+    {
+        return playerControl;
+    }
+
+    private VisualElement getPlayerScoreLabel(PlayerControl targetPlayerControl)
+    {
+        String playerName = targetPlayerControl.PlayerProfile.Name;
+
+        List<VisualElement> playerInfoContainer = singSceneControl.background.Query<VisualElement>().Where(ve => ve.name == "playerNameContainer").ToList();
+        foreach (VisualElement ve in playerInfoContainer)
+        {
+            Label playerNameLabel = ve.Query<Label>().Where(label => label.name == "playerNameLabel").First();
+
+            if (playerNameLabel.text == playerName)
+            {
+                return ve.Query<VisualElement>().Where(ves => ves.name == "playerScoreLabel").First();
+            }
+        }
+
+        return playerScoreLabel;
+
+    }
+
+
+
 
     // Ripped from ShowSentenceRating
     // Displays at the Same Position as the SentenceRating ("great", "good", "bad", "perfect")

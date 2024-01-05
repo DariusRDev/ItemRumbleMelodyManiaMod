@@ -22,10 +22,14 @@ public static class Items
            // Cast the object to the correct type.
            var itemActions = (ItemActions)itemActionsObject;
            var itemControl = (ItemControl)itemControlObject;
+
+           // Get the PlayerControl of the affected player.
+           PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+
            // Add Actions here.
-           itemActions.AddScore(100);
-           itemActions.BouncePlayerScoreLabel();
-           itemActions.AnimateItemCollection(itemControl);
+           itemActions.AddScore(targetPlayerControl, 100);
+           itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+           itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
        },
         // Get Dictionary from excel sheet
         SpawnProbabilities = CoinSpawnProbabilities
@@ -42,10 +46,12 @@ public static class Items
             // Cast the object to the correct type.
             var itemActions = (ItemActions)itemActionsObject;
             var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
-            itemActions.AddScore(-50);
-            itemActions.BouncePlayerScoreLabel();
-            itemActions.AnimateItemCollection(itemControl);
+            itemActions.AddScore(targetPlayerControl, -50);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = BananaSpawnProbabilities
@@ -53,7 +59,7 @@ public static class Items
 
     public static readonly Item BlueShelli = new Item("Blue Shelli")
     {
-        Description = "Deducts 500 Points from the player in first place",
+        Description = "Deducts 250 Points from the player in first place",
         ImagePath = "images/items/shells/blue_shell.png",
         VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
@@ -62,10 +68,12 @@ public static class Items
             // Cast the object to the correct type.
             var itemActions = (ItemActions)itemActionsObject;
             var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetFirstPlacePlayerControl();
             // Add Actions here.
-            itemActions.AddScore(-50);
-            itemActions.BouncePlayerScoreLabel();
-            itemActions.AnimateItemCollection(itemControl);
+            itemActions.AddScore(targetPlayerControl, -250);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = BlueShelliSpawnProbabilities
@@ -81,10 +89,12 @@ public static class Items
             // Cast the object to the correct type.
             var itemActions = (ItemActions)itemActionsObject;
             var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetRandomPlayerControl();
             // Add Actions here.
-            itemActions.AddScore(-50);
-            itemActions.BouncePlayerScoreLabel();
-            itemActions.AnimateItemCollection(itemControl);
+            itemActions.AddScore(targetPlayerControl, -50);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = GreenShelliSpawnProbabilities
@@ -100,10 +110,12 @@ public static class Items
             // Cast the object to the correct type.
             var itemActions = (ItemActions)itemActionsObject;
             var itemControl = (ItemControl)itemControlObject;
+            // Get the PlayerControl of the affected player.
+            PlayerControl targetPlayerControl = itemActions.GetInFrontOfMePlayerControl();
             // Add Actions here.
-            itemActions.AddScore(-50);
-            itemActions.BouncePlayerScoreLabel();
-            itemActions.AnimateItemCollection(itemControl);
+            itemActions.AddScore(targetPlayerControl, -50);
+            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = RedShelliSpawnProbabilities
