@@ -112,8 +112,8 @@ public class ItemActions : INeedInjection
         {
             float t = elapsed / durationInS;
             Vector2 newPosition = Vector2.Lerp(startPosition, endPosition, t);
-            visualElementToAnimate.style.left = newPosition.x;
-            visualElementToAnimate.style.top = newPosition.y;
+            visualElementToAnimate.style.left = newPosition.x + UnityEngine.Random.Range(0, 10);
+            visualElementToAnimate.style.top = newPosition.y + UnityEngine.Random.Range(0, 10);
             elapsed += Time.deltaTime;
             yield return null;
         }
