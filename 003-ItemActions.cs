@@ -40,6 +40,31 @@ public class ItemActions : INeedInjection
         Debug.Log($"Added {points} points to score of player '{targetPlayerControl.PlayerProfile?.Name}'");
     }
 
+    public void DisableLyricsForSeconds(float seconds)
+    {
+        singSceneControl.FadeOutLyrics(playerControl.Voice, 0.8f);
+        LeanTween.delayedCall(seconds + 1.6f, () =>
+        {
+            singSceneControl.FadeInLyrics(playerControl.Voice, .8f);
+        });
+    }
+
+    public void MuteAudio(float seconds)
+    {
+        LeanTween.value(singSceneControl.gameObject, 1f, 0f, 0.5f).setOnUpdate((float val) =>
+        {
+            singSceneControl.songAudioPlayer.VolumeFactor = val;
+        });
+
+        LeanTween.delayedCall(seconds, () =>
+        {
+            LeanTween.value(singSceneControl.gameObject, 0f, 1f, 0.5f).setOnUpdate((float val) =>
+            {
+                singSceneControl.songAudioPlayer.VolumeFactor = val;
+            });
+        });
+    }
+
     public void BouncePlayerScoreLabel(PlayerControl targetPlayerControl, float scale = 1.5f)
     {
         AnimationUtils.BounceVisualElementSize(gameObject, getPlayerScoreLabel(targetPlayerControl), scale);
@@ -52,11 +77,11 @@ public class ItemActions : INeedInjection
         // find in tree VisualElement == "playerScoreLabel"
         MoveToScore(itemControl.VisualElement, getPlayerScoreLabel(targetPlayerControl), 0.4f, () =>
                 {
-                    singSceneControl.StartCoroutine(FadeOut(itemControl.VisualElement, 0.2f, () =>
+                    FadeOut(itemControl.VisualElement, 0.2f, () =>
                     {
                         itemControl.VisualElement.RemoveFromHierarchy();
-                        ShowItemRating(onCollectText);
-                    }));
+                        ShowItemRating(targetPlayerControl, onCollectText);
+                    });
                 });
 
 
@@ -82,6 +107,8 @@ public class ItemActions : INeedInjection
                 .Where(pc => pc.PlayerScoreControl.TotalScore > myPoints)
                 .OrderBy(pc => pc.PlayerScoreControl.TotalScore).First();
     }
+
+
 
     public PlayerControl GetMyPlayerControll()
     {
@@ -112,7 +139,7 @@ public class ItemActions : INeedInjection
 
     // Ripped from ShowSentenceRating
     // Displays at the Same Position as the SentenceRating ("great", "good", "bad", "perfect")
-    public VisualElement ShowItemRating(String text)
+    public VisualElement ShowItemRating(PlayerControl targetPlayerControll, string text)
     {
         VisualElement label = new Label("      " + text);
 
@@ -143,11 +170,10 @@ public class ItemActions : INeedInjection
             .setOnComplete(label.RemoveFromHierarchy);
         return label;
     }
-
-    private void MoveToScore(VisualElement visualElementToAnimate, VisualElement targetElement, float durationInS, Action callback)
+    public void MoveToCenterAndFadeOut(VisualElement visualElementToAnimate, float durationInS, Action callback)
     {
         Vector2 startPosition = visualElementToAnimate.worldBound.position;
-        Vector2 endPosition = targetElement.worldBound.position;
+        Vector2 endPosition = new Vector2(singSceneControl.background.layout.width / 2, singSceneControl.background.layout.height / 2);
 
         // Move the visual element to the background so that it is not affected by Parents layouting.
         visualElementToAnimate.RemoveFromHierarchy();
@@ -163,7 +189,68 @@ public class ItemActions : INeedInjection
         // Start the tween
         LeanTween.value(singSceneControl.gameObject, startPosition.x, endPosition.x, durationInS).setOnUpdate((float val) =>
         {
-            visualElementToAnimate.style.left = val + UnityEngine.Random.Range(0, 10);
+            visualElementToAnimate.style.left = val;
+
+        }).setEaseInSine().setOnComplete(() =>
+        {
+            visualElementToAnimate.style.left = endPosition.x;
+        });
+
+        int widthAndHeight = 400;
+        LeanTween.value(singSceneControl.gameObject, visualElementToAnimate.style.width.value.value, widthAndHeight, durationInS).setOnUpdate((float val) =>
+        {
+            visualElementToAnimate.style.width = val;
+            visualElementToAnimate.style.marginLeft = val / -2;
+            visualElementToAnimate.style.height = val;
+            visualElementToAnimate.style.marginTop = val / -2;
+
+        }).setEaseOutSine().setOnComplete(() =>
+        {
+            visualElementToAnimate.style.width = widthAndHeight;
+            visualElementToAnimate.style.marginLeft = widthAndHeight / -2;
+            visualElementToAnimate.style.height = widthAndHeight;
+            visualElementToAnimate.style.marginTop = widthAndHeight / -2;
+        });
+
+
+        LeanTween.value(singSceneControl.gameObject, startPosition.y, endPosition.y, durationInS).setOnUpdate((float val) =>
+        {
+            visualElementToAnimate.style.top = val;
+        }).setEaseInSine().setOnComplete(() =>
+        {
+            visualElementToAnimate.style.top = endPosition.y;
+            LeanTween.delayedCall(0.8f, () =>
+            {
+                FadeOut(visualElementToAnimate, 0.2f, () =>
+                {
+                    visualElementToAnimate.RemoveFromHierarchy();
+                    callback?.Invoke();
+                });
+            });
+
+
+        });
+    }
+    private void MoveToScore(VisualElement visualElementToAnimate, VisualElement targetElement, float durationInS, Action callback)
+    {
+        Vector2 startPosition = visualElementToAnimate.worldBound.position;
+        Vector2 endPosition = targetElement.worldBound.position;
+
+        // Move the visual element to the background so that it is not affected by Parents layouting.
+        visualElementToAnimate.RemoveFromHierarchy();
+        singSceneControl.background.Add(visualElementToAnimate);
+        Vector2 parentPosition = singSceneControl.background.worldBound.position;
+        startPosition -= parentPosition;
+        endPosition -= parentPosition;
+
+        // Set the initial position
+        visualElementToAnimate.style.left = startPosition.x + UnityEngine.Random.Range(0, 10);
+        visualElementToAnimate.style.top = startPosition.y + UnityEngine.Random.Range(0, 10);
+
+        // Start the tween
+        LeanTween.value(singSceneControl.gameObject, startPosition.x, endPosition.x, durationInS).setOnUpdate((float val) =>
+        {
+            visualElementToAnimate.style.left = val;
 
         }).setEaseInSine().setOnComplete(() =>
         {
@@ -172,7 +259,7 @@ public class ItemActions : INeedInjection
 
         LeanTween.value(singSceneControl.gameObject, startPosition.y, endPosition.y, durationInS).setOnUpdate((float val) =>
         {
-            visualElementToAnimate.style.top = val + UnityEngine.Random.Range(0, 10);
+            visualElementToAnimate.style.top = val;
         }).setEaseInSine().setOnComplete(() =>
         {
             visualElementToAnimate.style.top = endPosition.y;
@@ -180,18 +267,16 @@ public class ItemActions : INeedInjection
         });
     }
 
-    private IEnumerator FadeOut(VisualElement visualElementToAnimate, float durationInS, Action callback)
+    private void FadeOut(VisualElement visualElementToAnimate, float durationInS, Action callback)
     {
-        float elapsed = 0f;
-        while (elapsed < durationInS)
+        // Starten Sie den Tween, um die Opazität von 1 auf 0 zu ändern
+        LeanTween.value(singSceneControl.gameObject, 1f, 0f, durationInS).setOnUpdate((float val) =>
         {
-            float t = elapsed / durationInS;
-            visualElementToAnimate.style.opacity = Mathf.Lerp(1f, 0.0001f, t);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        visualElementToAnimate.style.opacity = 0f;
-
-        callback?.Invoke();
+            visualElementToAnimate.style.opacity = val;
+        }).setOnComplete(() =>
+        {
+            visualElementToAnimate.style.opacity = 0f;
+            callback?.Invoke();
+        });
     }
 }
