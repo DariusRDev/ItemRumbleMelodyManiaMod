@@ -1,7 +1,12 @@
 # Item Rumble Mod
 
 ## Features
-The Item Rumble Mod adds items to the game that appear on notes with different effects and can be collected. It is designed to be easily extendable, allowing you to add new items by adding PNG images to the images folder and adding the item details in the Items.cs file (name, imagePath, onCollect method). Custom behaviors can be implemented in the ItemActions.cs file, such as adding points.
+Welcome to the Item Rumble Mod  where you can collect items on the notes you sing, each with unique effects like speeding up, slowing down, adding points, deducting points, muting audio, and hiding lyrics and notes. This mode will add a fun and competitive element to MelodyMania, making it more enjoyable for players who want a more dynamic experience.
+
+
+### Balanced Challenge for All Skill Levels
+In this mod, we've introduced dynamic item spawning based on your score distance from the leader. It's designed to ensure a fun experience for everyone, especially less experienced singers. Enjoy a game that adapts to your performance, making it engaging for all players.
+
 ## Already Implemented Items:
 | Item Name | Description | Image |
 | --- | --- | --- |
@@ -16,14 +21,14 @@ The Item Rumble Mod adds items to the game that appear on notes with different e
 | Rocki Rocket | Gives you 500 points | <img src="images/items/rocket.png" width="100"> |
 | Stari | Speeds up the song for 3 seconds | <img src="images/items/star.png" width="100"> |
 | Snaili | Slows down the song for 3 seconds | <img src="images/items/snaili.png" width="100"> |
-| Note Eraseri | Hides the Notes of the Collecting Player for 5 seconds | <img src="images/items/eraser.png" width="100"> |
+| Note Eraseri | Hides the notes of the collecting player for 5 seconds | <img src="images/items/eraser.png" width="100"> |
 
 
 ## Videos
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/3035bf2b-fbd8-4599-9e96-ca0c2b795e33
 
-##Screenshots
+## Screenshots
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/b4b50ee4-8263-4a2d-a3ef-f8cc22a68c57)
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/da948896-3f0a-4d5a-be74-50caffa31efa)
 
@@ -35,15 +40,13 @@ Contributions are welcome, especially for animations, as I am not proficient in 
 The items could be similar to those in the popular game Mario Kart:
 
 - **Rocket (Bullet Bill)**: Automatically hits all notes for a short period of time.
-- **Star**: Plays the song at 1.3x speed for a short period of time.
 - **Golden Mushroom**: Grants a points multiplier for a short period of time.
 - **Blooper**: Covers the screen with ink, making it difficult to see the lyrics and notes. This benefits players who know the song by heart.
 
 
 This mode will add a fun and competitive element to MelodyMania, making it more enjoyable for players who want a more dynamic experience.
 
-At the moment coins and bananas are implemented, with coins giving 100 points and bananas deducting 50 points.
-The Shells dont have their functionality Yet
+
 
 # Documentation
 
@@ -122,6 +125,15 @@ public static readonly List<Item> AllItems = new List<Item>()
 4. Implement the desired behavior for the item in the customAction delegate. This could involve adding or subtracting from the player's score, triggering animations, or any other game effects.
 5. If `itemActions` does not have the desired Effect implement it in `ItemActions.cs`
 6. Generate spawn Probabilities using the Excel sheet. (Scroll down to see generated C# Code)
+
+### Balancing
+In this mod for Melody Mania, I've introduced an innovative feature known as "rubberbanding" to enhance the gameplay experience, particularly for players of different skill levels.
+
+Rubberbanding is a dynamic game mechanic that adjusts the difficulty based on the player's performance. It aims to level the playing field and ensure everyone can enjoy the game, whether you're a seasoned singer or a beginner.
+
+The spawn chance of items in Melody Mania depends on your current score distance to the player in the first place. 
+
+To change balancing, edit the Excel file and copy the Generated Code to Items.cs
 
 # Acknowledgements
 
