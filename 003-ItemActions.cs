@@ -46,18 +46,18 @@ public class ItemActions : INeedInjection
 
     }
 
-    public void AnimateItemCollection(PlayerControl targetPlayerControl, ItemControl itemControl)
+    public void AnimateItemCollection(PlayerControl targetPlayerControl, ItemControl itemControl, String onCollectText)
     {
 
         // find in tree VisualElement == "playerScoreLabel"
-        singSceneControl.StartCoroutine(MoveToScore(itemControl.VisualElement, getPlayerScoreLabel(targetPlayerControl), 0.4f, () =>
-        {
-            singSceneControl.StartCoroutine(FadeOut(itemControl.VisualElement, 0.2f, () =>
-            {
-                itemControl.VisualElement.RemoveFromHierarchy();
-                ShowItemRating("+100 COIN");
-            }));
-        }));
+        MoveToScore(itemControl.VisualElement, getPlayerScoreLabel(targetPlayerControl), 0.4f, () =>
+                {
+                    singSceneControl.StartCoroutine(FadeOut(itemControl.VisualElement, 0.2f, () =>
+                    {
+                        itemControl.VisualElement.RemoveFromHierarchy();
+                        ShowItemRating(onCollectText);
+                    }));
+                });
 
 
     }
@@ -144,11 +144,11 @@ public class ItemActions : INeedInjection
         return label;
     }
 
-    private IEnumerator MoveToScore(VisualElement visualElementToAnimate, VisualElement targetElement, float durationInS, Action callback)
+    private void MoveToScore(VisualElement visualElementToAnimate, VisualElement targetElement, float durationInS, Action callback)
     {
-        float elapsed = 0f;
         Vector2 startPosition = visualElementToAnimate.worldBound.position;
         Vector2 endPosition = targetElement.worldBound.position;
+
         // Move the visual element to the background so that it is not affected by Parents layouting.
         visualElementToAnimate.RemoveFromHierarchy();
         singSceneControl.background.Add(visualElementToAnimate);
@@ -156,19 +156,28 @@ public class ItemActions : INeedInjection
         startPosition -= parentPosition;
         endPosition -= parentPosition;
 
-        while (elapsed < durationInS)
-        {
-            float t = elapsed / durationInS;
-            Vector2 newPosition = Vector2.Lerp(startPosition, endPosition, t);
-            visualElementToAnimate.style.left = newPosition.x + UnityEngine.Random.Range(0, 10);
-            visualElementToAnimate.style.top = newPosition.y + UnityEngine.Random.Range(0, 10);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        visualElementToAnimate.style.left = endPosition.x;
-        visualElementToAnimate.style.top = endPosition.y;
+        // Set the initial position
+        visualElementToAnimate.style.left = startPosition.x;
+        visualElementToAnimate.style.top = startPosition.y;
 
-        callback?.Invoke();
+        // Start the tween
+        LeanTween.value(singSceneControl.gameObject, startPosition.x, endPosition.x, durationInS).setOnUpdate((float val) =>
+        {
+            visualElementToAnimate.style.left = val + UnityEngine.Random.Range(0, 10);
+
+        }).setEaseInSine().setOnComplete(() =>
+        {
+            visualElementToAnimate.style.left = endPosition.x;
+        });
+
+        LeanTween.value(singSceneControl.gameObject, startPosition.y, endPosition.y, durationInS).setOnUpdate((float val) =>
+        {
+            visualElementToAnimate.style.top = val + UnityEngine.Random.Range(0, 10);
+        }).setEaseInSine().setOnComplete(() =>
+        {
+            visualElementToAnimate.style.top = endPosition.y;
+            callback?.Invoke();
+        });
     }
 
     private IEnumerator FadeOut(VisualElement visualElementToAnimate, float durationInS, Action callback)

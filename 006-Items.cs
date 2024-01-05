@@ -29,7 +29,7 @@ public static class Items
            // Add Actions here.
            itemActions.AddScore(targetPlayerControl, 100);
            itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-           itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
+           itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "+100 Coin");
        },
         // Get Dictionary from excel sheet
         SpawnProbabilities = CoinSpawnProbabilities
@@ -37,7 +37,7 @@ public static class Items
 
     public static readonly Item Banana = new Item("Banana")
     {
-        Description = "Subtracts 50 Points",
+        Description = "Subtracts 75 Points",
         ImagePath = "images/items/banana/fruit_banana.png",
         VisualElementName = "itemCollectorItem",
         // Has to be object, because of loading order of cs files.
@@ -49,9 +49,9 @@ public static class Items
             // Get the PlayerControl of the affected player.
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
-            itemActions.AddScore(targetPlayerControl, -50);
+            itemActions.AddScore(targetPlayerControl, -75);
             itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-75 Banana");
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = BananaSpawnProbabilities
@@ -73,11 +73,12 @@ public static class Items
             // Add Actions here.
             itemActions.AddScore(targetPlayerControl, -250);
             itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-250 Blue Shell");
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = BlueShelliSpawnProbabilities
     };
+
     public static readonly Item GreenShelli = new Item("Green Shelli")
     {
         Description = "Deducts 50 points from a random player",
@@ -94,14 +95,15 @@ public static class Items
             // Add Actions here.
             itemActions.AddScore(targetPlayerControl, -50);
             itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-50 Green Shell");
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = GreenShelliSpawnProbabilities
     };
+
     public static readonly Item RedShelli = new Item("Red Shelli")
     {
-        Description = "Deducts 50 points the player in front of you",
+        Description = "Deducts 75 points the player in front of you",
         ImagePath = "images/items/shells/red_shell.png",
         VisualElementName = "shellCollectorItem",
         // Has to be object, because of loading order of cs files.
@@ -113,9 +115,9 @@ public static class Items
             // Get the PlayerControl of the affected player.
             PlayerControl targetPlayerControl = itemActions.GetInFrontOfMePlayerControl();
             // Add Actions here.
-            itemActions.AddScore(targetPlayerControl, -50);
+            itemActions.AddScore(targetPlayerControl, -75);
             itemActions.BouncePlayerScoreLabel(targetPlayerControl);
-            itemActions.AnimateItemCollection(targetPlayerControl, itemControl);
+            itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "-75 Red Shell");
         },
         // Get Dictionary from excel sheet
         SpawnProbabilities = RedShelliSpawnProbabilities
@@ -134,13 +136,13 @@ public static class Items
     /**
      * Returns a random item based on the pointsToFirstPlace.
      */
-    public static Item SpawnItem(int pointsToFirstPlace)
+    public static Item SpawnItem(int pointsToFirstPlace, List<Item> activeItems)
     {
 
         try
         {
             Dictionary<Item, int> itemProbabilities = new Dictionary<Item, int>();
-            foreach (Item item in AllItems)
+            foreach (Item item in activeItems)
             {
                 // find nearest key in dictionary
                 int nearestKey = 0;

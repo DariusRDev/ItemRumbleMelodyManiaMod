@@ -9,7 +9,7 @@ public class ItemRumbleModModSettings : IModSettings
     public bool myBool = true;
     public double myDouble = 12.34;
     public int myInt = 42;
-    public string myString = "text";
+    public string activeItemList = "";
 
     public List<IModSettingControl> GetModSettingControls()
     {
@@ -18,7 +18,6 @@ public class ItemRumbleModModSettings : IModSettings
             new BoolModSettingControl(() => myBool, newValue => myBool = newValue) { Label = "My Bool" },
             new DoubleModSettingControl(() => myDouble, newValue => myDouble = newValue) { Label = "My Double" },
             new IntModSettingControl(() => myInt, newValue => myInt = newValue) { Label = "My Int" },
-            new StringModSettingControl(() => myString, newValue => myString = newValue) { Label = "My String" },
         };
     }
 }

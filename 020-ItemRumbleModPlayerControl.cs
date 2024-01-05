@@ -35,11 +35,12 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
     private List<ItemControl> itemControls = new List<ItemControl>();
     private List<RecordedNoteControl> recordedNoteControls = new List<RecordedNoteControl>();
 
-    /*   private VisualElement itemCountContainer;
-      private Label itemCountLabel; */
-    /* 
-        private int totalCollectedItemCount; */
+    private List<Item> activeItems = new List<Item>();
+
+    public String activeItemNames = "";
+
     private int collectedItemCountSinceLastBonus;
+
 
     public void OnInjectionFinished()
     {
@@ -54,6 +55,7 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
         itemActions = new ItemActions();
         injector.Inject(itemActions);
+        activeItems = Items.AllItems.Where(it => activeItemNames.Contains(it.Name)).ToList();
 
     }
 
@@ -127,8 +129,7 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         {
             return;
         }
-
-        Item item = Items.SpawnItem(pointsToFirstPlace);
+        Item item = Items.SpawnItem(pointsToFirstPlace, activeItems);
         ItemControl itemControl = new ItemControl(modFolder, targetNoteControl, item);
         itemControls.Add(itemControl);
     }

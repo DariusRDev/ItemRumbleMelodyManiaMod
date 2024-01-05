@@ -1,9 +1,7 @@
 using UnityEngine;
 using UniInject;
-using UnityEngine.UIElements;
 using UniRx;
-using System;
-using System.Collections.Generic;
+using System.Linq;
 
 // Open the mod folder with Visual Studio Code and installed C# Dev Kit for IDE features such as
 // code completion, error markers, parameter hints, go to definition, etc.
@@ -12,18 +10,19 @@ using System.Collections.Generic;
 // Available interfaces can be found by executing 'mod.interfaces' in the game's console.
 public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod
 {
-    // Get common objects from the app environment via Inject attribute.
-    [Inject]
-    private AudioManager audioManager;
 
+    [Inject]
+    private ItemRumbleModModSettings modSettings;
     public void OnLoadMod()
     {
         // You can do anything here, for example ...
 
-        // ... change audio clips
-        // audioManager.defaultButtonSound = AudioManager.LoadAudioClipFromUriImmediately($"{modContext.ModFolder}/sounds/cartoon-jump-6462.mp3");
-
         Debug.Log($"{nameof(ItemRumbleModLifeCycle)}.OnLoadMod");
+
+        /* if (modSettings.activeItemList == "")
+        {
+            modSettings.activeItemList = string.Join(",", Items.AllItems.Select(item => item.Name));
+        } */
     }
 
     public void OnDisableMod()

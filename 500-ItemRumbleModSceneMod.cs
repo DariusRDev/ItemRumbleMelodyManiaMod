@@ -11,8 +11,10 @@ public class ItemRumbleModSceneMod : IGameRoundMod
     [Inject]
     private ModObjectContext modObjectContext;
 
-    public List<Item> activeItems = new List<Item>();
+    public List<String> activeItems = new List<String>();
 
+    [Inject]
+    private ItemRumbleModModSettings modSettings;
 
     public string DisplayName => "Item Rumble";
 
@@ -31,6 +33,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
     public VisualElement CreateConfigurationVisualElement()
     {
+        modSettings.myBool = !myBool;
+        activeItems = new List<String>(modSettings.activeItemList.Split(','));
 
         var visualElement = new VisualElement();
         var label = new Label("Item Rumble Mod Settings");
@@ -43,10 +47,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
         divider.style.backgroundColor = grey; //grey
         visualElement.Add(divider);
-
-
-
-
         foreach (Item item in Items.AllItems)
         {
 
@@ -58,21 +58,19 @@ public class ItemRumbleModSceneMod : IGameRoundMod
             image.style.height = 25;
             ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
                 .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
-
             row.Add(image);
-
-
             // create a checkbox for each item
-            IModSettingControl checkbox = new BoolModSettingControl(() => activeItems.Contains(item), newValue =>
+            IModSettingControl checkbox = new BoolModSettingControl(() => activeItems.Contains(item.Name), newValue =>
             {
                 if (newValue)
                 {
-                    activeItems.Add(item);
+                    activeItems.Add(item.Name);
                 }
                 else
                 {
-                    activeItems.Remove(item);
+                    activeItems.Remove(item.Name);
                 }
+                modSettings.activeItemList = string.Join(",", activeItems);
             })
             { Label = item.Name };
             row.Add(checkbox.CreateVisualElement());
