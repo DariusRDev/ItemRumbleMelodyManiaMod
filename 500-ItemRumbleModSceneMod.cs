@@ -27,6 +27,7 @@ public class ItemRumbleModSceneMod : IGameRoundMod
     {
         ItemRumbleGameRoundModifierControl control = GameObjectUtils.CreateGameObjectWithComponent<ItemRumbleGameRoundModifierControl>();
         control.modFolder = modObjectContext.ModFolder;
+        control.activeItemNames = modSettings.activeItemList;
         return control;
 
     }

@@ -10,7 +10,6 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 {
     public string modFolder;
 
-    private const int CollectedItemCountBonusThreshold = 10;
 
     [Inject]
     private GameObject gameObject;
@@ -24,11 +23,6 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
     [Inject]
     private Injector injector;
 
-    [Inject(UxmlName = R.UxmlNames.playerImage)]
-    private VisualElement playerImage;
-
-    [Inject(UxmlName = R.UxmlNames.playerScoreLabel)]
-    private VisualElement playerScoreLabel;
 
     private ItemActions itemActions;
 
@@ -39,7 +33,6 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     public String activeItemNames = "";
 
-    private int collectedItemCountSinceLastBonus;
 
 
     public void OnInjectionFinished()

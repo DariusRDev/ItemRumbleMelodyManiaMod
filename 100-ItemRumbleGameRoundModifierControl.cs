@@ -1,6 +1,7 @@
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using UniInject;
+using System;
 
 class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
 {
@@ -12,10 +13,9 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
     [Inject]
     private UIDocument uiDocument;
 
-    [Inject]
-    private ItemRumbleModModSettings modSettings;
 
     private List<ItemRumbleModPlayerControl> itemRumblePlayerControls = new List<ItemRumbleModPlayerControl>();
+    public String activeItemNames = "";
 
     private void Start()
     {
@@ -45,7 +45,7 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
     {
         ItemRumbleModPlayerControl itemCollectorGameModifierPlayerControl = new ItemRumbleModPlayerControl();
         itemCollectorGameModifierPlayerControl.modFolder = modFolder;
-        itemCollectorGameModifierPlayerControl.activeItemNames = modSettings.activeItemList;
+        itemCollectorGameModifierPlayerControl.activeItemNames = activeItemNames;
         playerControl.PlayerUiControl.Injector.Inject(itemCollectorGameModifierPlayerControl);
         itemRumblePlayerControls.Add(itemCollectorGameModifierPlayerControl);
     }
