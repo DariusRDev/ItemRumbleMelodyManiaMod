@@ -63,7 +63,7 @@ This mode will add a fun and competitive element to MelodyMania, making it more 
 3. Activate Modifier Item Rumble in Modifier Settings (Top Right in Song Select Scene)
 4. Start a song in the singing scene.
 5. Collect Items by hiting the center of the note
-6. 
+
 # Documentation
 
 ## ItemActions Class
