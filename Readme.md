@@ -49,10 +49,8 @@ This mode will add a fun and competitive element to MelodyMania, making it more 
 
 
 
-# Documentation
-
-## Installation
-1. Download the latest release `Source code (zip)` of the Skip Seconds Melody Mania Mod mod from the Releases page.
+# Installation
+1. Download the latest release `ItemRumbleMelodyManiaMod.zip (zip)` of the Skip Seconds Melody Mania Mod mod from the Releases page.
 2. Extract the downloaded ZIP file to a location of your choice.
 3. Mod folders are searched in a specific folder called the mods root folder.
 4. The mods root folder can be found by executing the command `mod.path` in the game's console (open via `F7`).
@@ -65,6 +63,8 @@ This mode will add a fun and competitive element to MelodyMania, making it more 
 3. Activate Modifier Item Rumble in Modifier Settings (Top Right in Song Select Scene)
 4. Start a song in the singing scene.
 5. Collect Items by hiting the center of the note
+6. 
+# Documentation
 
 ## ItemActions Class
 

@@ -1,10 +1,10 @@
-name: ItemRumbleMod
+name: Item Rumble by Darius
 version: 1.0.0
-description: Example description
-website: https://example.com
+description: Adds Items to the Game
+website: https://github.com/DerDorius/ItemRumbleMelodyManiaMod/releases
 authors:
-  - Someone
-  - someone@example.com
+  - Darius Rohde
+  - https://github.com/DerDorius/ItemRumbleMelodyManiaMod/releases
 # Additional assemblies from the app domain that need to be accessed by your mod.
 requiredAssemblies:
   - UnityEngine.VideoModule
