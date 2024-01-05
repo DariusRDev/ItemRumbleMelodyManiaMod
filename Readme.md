@@ -2,7 +2,7 @@
 
 ## Features
 The Item Rumble Mod adds items to the game that appear on notes with different effects and can be collected. It is designed to be easily extendable, allowing you to add new items by adding PNG images to the images folder and adding the item details in the Items.cs file (name, imagePath, onCollect method). Custom behaviors can be implemented in the ItemActions.cs file, such as adding points.
-
+## Already Implemented Items:
 | Item Name | Description | Image |
 | --- | --- | --- |
 | Coin | Adds 100 Points | <img src="images/items/coins/Gold_1.png" width="100"> |
@@ -13,15 +13,17 @@ The Item Rumble Mod adds items to the game that appear on notes with different e
 | Flashi | Mutes audio for 2 seconds | <img src="images/items/lightning.png" width="100"> |
 | Ghosti | Makes lyrics invisible for 5 seconds | <img src="images/items/ghost.png" width="100"> |
 | Mushi Mushroom | Gives you 250 points | <img src="images/items/mushroom.png" width="100"> |
-| Rocki Rocket | Gives you 500 points | <img src="images/items/lightning.png" width="100"> |
+| Rocki Rocket | Gives you 500 points | <img src="images/items/rocket.png" width="100"> |
 | Stari | Speeds up the song for 3 seconds | <img src="images/items/star.png" width="100"> |
 | Snaili | Slows down the song for 3 seconds | <img src="images/items/snaili.png" width="100"> |
 | Note Eraseri | Hides the Notes of the Collecting Player for 5 seconds | <img src="images/items/eraser.png" width="100"> |
 
 
-
+## Videos
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/3035bf2b-fbd8-4599-9e96-ca0c2b795e33
+
+##Screenshots
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/b4b50ee4-8263-4a2d-a3ef-f8cc22a68c57)
 ![image](https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/da948896-3f0a-4d5a-be74-50caffa31efa)
 
