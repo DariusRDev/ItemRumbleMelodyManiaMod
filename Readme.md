@@ -53,11 +53,7 @@ This mode will add a fun and competitive element to MelodyMania, making it more 
 
 ## Installation
 1. Download the latest release `Source code (zip)` of the Skip Seconds Melody Mania Mod mod from the Releases page.
-2. Extract the downloaded ZIP fi
-
-https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/50a3147b-dde9-43b8-bf93-e70c4c16cdfb
-
-le to a location of your choice.
+2. Extract the downloaded ZIP file to a location of your choice.
 3. Mod folders are searched in a specific folder called the mods root folder.
 4. The mods root folder can be found by executing the command `mod.path` in the game's console (open via `F7`).
 5. To install a mod folder, copy it to the mods root folder
