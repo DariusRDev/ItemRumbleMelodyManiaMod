@@ -18,6 +18,8 @@ public class ItemActions : INeedInjection
     [Inject]
     private PlayerControl playerControl;
 
+
+
     [Inject(UxmlName = R.UxmlNames.playerScoreLabel)]
     private VisualElement playerScoreLabel;
 
@@ -177,13 +179,36 @@ public class ItemActions : INeedInjection
         });
     }
 
-    public void shakeScreen(float seconds)
+    public void shakeScreen(float seconds, float intensity)
     {
         // randomly shake screen for seconds between two values and randomly long
         VisualElement visualElementToShake = singSceneControl.background;
+        Vector3 originalPosition = visualElementToShake.transform.position;
+        Quaternion originalRotation = visualElementToShake.transform.rotation;
         // shake motion on x y and rotation
+        float timeToShake = UnityEngine.Random.Range(0.1f, seconds > 0.4f ? 0.4f : seconds);
+        LeanTween.value(singSceneControl.gameObject, 0, 1, timeToShake)
+             .setOnUpdate((float val) =>
+             {
+                 // Randomly change position and rotation
+                 float randomX = UnityEngine.Random.Range(-intensity, intensity);
+                 float randomY = UnityEngine.Random.Range(-intensity, intensity);
+                 float randomRotation = UnityEngine.Random.Range(-intensity, intensity);
 
-        // Todo make this a bit more random
+                 visualElementToShake.transform.position = originalPosition + new Vector3(randomX, randomY, 0);
+                 visualElementToShake.transform.rotation = Quaternion.Euler(0, 0, randomRotation);
+             })
+             .setOnComplete(() =>
+             {
+                 // Reset position and rotation
+                 visualElementToShake.transform.position = originalPosition;
+                 visualElementToShake.transform.rotation = originalRotation;
+                 if (seconds - timeToShake > 0)
+                 {
+
+                     shakeScreen(seconds - timeToShake, intensity);
+                 }
+             });
 
 
     }
@@ -224,8 +249,11 @@ public class ItemActions : INeedInjection
             .setOnComplete(label.RemoveFromHierarchy);
         return label;
     }
-    public void MoveToCenterAndFadeOut(VisualElement visualElementToAnimate, float durationInS, Action callback)
+    public void MoveToCenterAndFadeOut(ItemControl itemControl, PlayerControl targetPlayerControl, float durationInS, Action callback)
     {
+
+
+        VisualElement visualElementToAnimate = itemControl.VisualElement;
         Vector2 startPosition = visualElementToAnimate.worldBound.position;
         Vector2 endPosition = new Vector2(singSceneControl.background.layout.width / 2, singSceneControl.background.layout.height / 2);
 

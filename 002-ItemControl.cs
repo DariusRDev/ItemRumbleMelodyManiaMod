@@ -1,3 +1,4 @@
+using UniInject;
 using UniRx;
 using UnityEngine.UIElements;
 
@@ -10,12 +11,19 @@ public class ItemControl
     private readonly VisualElement visualElement;
     public VisualElement VisualElement => visualElement;
 
+    [Inject(Optional = true)]
+    private MicProfile micProfile;
+
     public ItemControl(string modFolder, TargetNoteControl targetNoteControl, Item item)
     {
         this.targetNoteControl = targetNoteControl;
         this.Item = item;
         this.visualElement = new VisualElement();
         visualElement.name = item.VisualElementName;
+        if (micProfile != null)
+        {
+            visualElement.style.backgroundColor = new StyleColor(micProfile.Color);
+        }
         ImageManager.LoadSpriteFromUri($"{modFolder}/{item.ImagePath}")
             .Subscribe(sprite => visualElement.style.backgroundImage = new StyleBackground(sprite));
 

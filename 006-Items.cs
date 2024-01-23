@@ -148,7 +148,7 @@ public static class Items
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
             itemActions.MuteAudio(2);
-            itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.8f, () =>
+            itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.8f, () =>
             {
                 itemActions.ShowItemRating(targetPlayerControl, "Flashi");
             });
@@ -172,7 +172,7 @@ public static class Items
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
             itemActions.DisableLyricsForSeconds(5);
-            itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.8f, () =>
+            itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.8f, () =>
              {
                  itemActions.ShowItemRating(targetPlayerControl, "Ghosti");
              });
@@ -241,7 +241,7 @@ public static class Items
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
             itemActions.ChangePlaybackSpeed(3);
-            itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.8f, () =>
+            itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.8f, () =>
              {
                  itemActions.ShowItemRating(targetPlayerControl, "Stari Speed Up");
              });
@@ -265,7 +265,7 @@ public static class Items
              PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
              // Add Actions here.
              itemActions.ChangePlaybackSpeed(3, 0.5f);
-             itemActions.MoveToCenterAndFadeOut(itemControl.VisualElement, 0.9f, () =>
+             itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
               {
                   itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
               });
@@ -296,6 +296,56 @@ public static class Items
 
     };
 
+    public static readonly Item TinaTurner = new Item("Tina Turner")
+    {
+        Description = "Rotates the Screen 360°",
+        ImagePath = "images/items/rotateScreen.png",
+        VisualElementName = "shellCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+         {
+             // Cast the object to the correct type.
+             var itemActions = (ItemActions)itemActionsObject;
+             var itemControl = (ItemControl)itemControlObject;
+             // Get the PlayerControl of the affected player.
+             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+             // Add Actions here.
+             itemActions.rotateScreen(2);
+             itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
+                    {
+                        itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
+                    });
+         },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = EraserSpawnProbabilities,
+
+    };
+
+    public static readonly Item Shaker = new Item("Shaker")
+    {
+        Description = "Shakes the Screen for 3 seconds",
+        ImagePath = "images/items/shakescreen.png",
+        VisualElementName = "shellCollectorItem",
+        // Has to be object, because of loading order of cs files.
+        OnCollectAction = (object itemActionsObject, object itemControlObject) =>
+         {
+             // Cast the object to the correct type.
+             var itemActions = (ItemActions)itemActionsObject;
+             var itemControl = (ItemControl)itemControlObject;
+             // Get the PlayerControl of the affected player.
+             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+             // Add Actions here.
+             itemActions.shakeScreen(2, 0.9f);
+             itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
+                    {
+                        itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
+                    });
+         },
+        // Get Dictionary from excel sheet
+        SpawnProbabilities = EraserSpawnProbabilities,
+
+    };
+
 
 
     public static readonly List<Item> AllItems = new List<Item>()
@@ -311,7 +361,9 @@ public static class Items
         Rocki,
         Stari,
         Snaili,
-        Eraser
+        Eraser,
+        TinaTurner,
+        Shaker
     };
 
     /**
