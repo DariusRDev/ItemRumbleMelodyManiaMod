@@ -31,25 +31,34 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     private List<Item> activeItems = new List<Item>();
 
-    public String activeItemNames = "";
+    public string activeItemNames = "";
 
+    private List<IDisposable> subscriptions = new List<IDisposable>();
 
 
     public void OnInjectionFinished()
     {
+        var subscription1 = playerControl.PlayerUiControl.NoteDisplayer.TargetNoteControlCreatedEventStream
+            .Subscribe(evt => OnCreatedTargetNoteControl(evt.TargetNoteControl, playerControl));
+        subscriptions.Add(subscription1);
 
-        playerControl.PlayerUiControl.NoteDisplayer.TargetNoteControlCreatedEventStream
-            .Subscribe(evt => OnCreatedTargetNoteControl(evt.TargetNoteControl, playerControl))
-            .AddTo(gameObject);
-
-        playerControl.PlayerUiControl.NoteDisplayer.RecordedNoteControlCreatedEventStream
-            .Subscribe(evt => OnCreatedRecordedNoteControl(evt.RecordedNoteControl, playerControl))
-            .AddTo(gameObject);
+        var subscription2 = playerControl.PlayerUiControl.NoteDisplayer.RecordedNoteControlCreatedEventStream
+            .Subscribe(evt => OnCreatedRecordedNoteControl(evt.RecordedNoteControl, playerControl));
+        subscriptions.Add(subscription2);
 
         itemActions = new ItemActions();
         injector.Inject(itemActions);
         activeItems = Items.AllItems.Where(it => activeItemNames.Contains(it.Name)).ToList();
+    }
 
+    public void OnObsolete()
+    {
+        foreach (var subscription in subscriptions)
+        {
+            subscription.Dispose();
+        }
+
+        itemControls.ForEach(it => it.OnObsolete());
     }
 
 

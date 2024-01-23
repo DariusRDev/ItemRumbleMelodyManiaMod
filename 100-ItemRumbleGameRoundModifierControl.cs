@@ -39,6 +39,11 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
         itemRumblePlayerControls.ForEach(it => it.Update());
     }
 
+    public void OnObsolete()
+    {
+        itemRumblePlayerControls.ForEach(it => it.OnObsolete());
+    }
+
 
 
     private void CreateItemCollectorControl(PlayerControl playerControl)

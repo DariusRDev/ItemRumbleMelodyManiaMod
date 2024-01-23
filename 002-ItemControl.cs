@@ -21,5 +21,10 @@ public class ItemControl
 
         targetNoteControl.VisualElement.Add(visualElement);
     }
+
+    public void OnObsolete()
+    {
+        targetNoteControl.VisualElement.Remove(visualElement);
+    }
 }
 

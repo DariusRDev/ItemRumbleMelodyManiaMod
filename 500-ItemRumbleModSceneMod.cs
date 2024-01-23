@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UniRx;
 
-public class ItemRumbleModSceneMod : IGameRoundMod
+public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolete
 {
 
     [Inject]
     private ModObjectContext modObjectContext;
+
+
 
     public List<String> activeItems = new List<String>();
 
@@ -20,21 +22,28 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
     public double DisplayOrder => 0;
 
-    public bool myBool = true;
 
-
+    private ItemRumbleGameRoundModifierControl control;
     public GameRoundModifierControl CreateControl()
     {
-        ItemRumbleGameRoundModifierControl control = GameObjectUtils.CreateGameObjectWithComponent<ItemRumbleGameRoundModifierControl>();
+        control = GameObjectUtils.CreateGameObjectWithComponent<ItemRumbleGameRoundModifierControl>();
         control.modFolder = modObjectContext.ModFolder;
         control.activeItemNames = modSettings.activeItemList;
         return control;
 
     }
 
+    private void OnObsolete()
+    {
+        control.OnObsolete();
+        GameObjectUtils.Destroy(control);
+        // destroy this
+
+    }
+
+
     public VisualElement CreateConfigurationVisualElement()
     {
-        modSettings.myBool = !myBool;
         activeItems = new List<String>(modSettings.activeItemList.Split(','));
 
         var visualElement = new VisualElement();
@@ -96,6 +105,18 @@ public class ItemRumbleModSceneMod : IGameRoundMod
         return visualElement;
 
 
+    }
+
+    public void OnModInstanceBecomesObsolete()
+    {
+        try
+        {
+            OnObsolete();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
     }
 }
 

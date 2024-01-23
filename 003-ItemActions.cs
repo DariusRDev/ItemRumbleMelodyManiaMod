@@ -159,6 +159,35 @@ public class ItemActions : INeedInjection
 
     }
 
+    public void rotateScreen(float seconds)
+    {
+        VisualElement visualElementToRotate = singSceneControl.background;
+        float fromValue = 0;
+        float untilValue = 360;
+
+        LeanTween.value(singSceneControl.gameObject, fromValue, untilValue, seconds)
+            .setEaseInSine()
+           .setOnUpdate(interpolatedValue =>
+        {
+            visualElementToRotate.transform.rotation = Quaternion.Euler(0, 0, interpolatedValue);
+        })
+        .setOnComplete(() =>
+        {
+            visualElementToRotate.transform.rotation = Quaternion.Euler(0, 0, untilValue);
+        });
+    }
+
+    public void shakeScreen(float seconds)
+    {
+        // randomly shake screen for seconds between two values and randomly long
+        VisualElement visualElementToShake = singSceneControl.background;
+        // shake motion on x y and rotation
+
+        // Todo make this a bit more random
+
+
+    }
+
 
 
 
