@@ -29,6 +29,8 @@ public class ItemActions : INeedInjection
     [Inject(Key = nameof(sentenceRatingUi))]
     private VisualTreeAsset sentenceRatingUi;
 
+    [Inject(Optional = true)]
+    private MicProfile micProfile;
 
     public void AddScore(PlayerControl targetPlayerControl, int points)
     {
@@ -202,7 +204,7 @@ public class ItemActions : INeedInjection
              {
                  // Reset position and rotation
                  visualElementToShake.transform.position = originalPosition;
-                 visualElementToShake.transform.rotation = originalRotation;
+                 visualElementToShake.transform.rotation = Quaternion.Euler(0, 0, 0);
                  if (seconds - timeToShake > 0)
                  {
 
@@ -268,6 +270,14 @@ public class ItemActions : INeedInjection
         visualElementToAnimate.style.left = startPosition.x;
         visualElementToAnimate.style.top = startPosition.y;
 
+        LeanTween.delayedCall(durationInS / 2, () =>
+        {
+            if (micProfile != null)
+            {
+                itemControl.fadeInBackground(micProfile.Color, 0.18f + durationInS / 2.1f, singSceneControl.gameObject);
+            }
+        });
+
         // Start the tween
         LeanTween.value(singSceneControl.gameObject, startPosition.x, endPosition.x, durationInS).setOnUpdate((float val) =>
         {
@@ -301,6 +311,9 @@ public class ItemActions : INeedInjection
         }).setEaseInSine().setOnComplete(() =>
         {
             visualElementToAnimate.style.top = endPosition.y;
+
+
+
             LeanTween.delayedCall(0.2f, () =>
             {
                 FadeOut(visualElementToAnimate, 0.2f, () =>
