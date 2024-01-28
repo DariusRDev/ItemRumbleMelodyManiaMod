@@ -194,3 +194,5 @@ eval-9,
 eval-10,
 eval-11]
 
+[INF] Assemblies exposed to mods by default: [UnityEngine,UnityEngine.AudioModule,UnityEngine.CoreModule,UnityEngine.InputLegacyModule,UnityEngine.InputModule,UnityEngine.UI,UnityEngine.UIElementsModule,UnityEngine.UIModule,UnityEngine.VideoModule,com.achimmihca.uniinject,playshared,playsharedui,UniRx,Plugins,Common,Scenes]
+

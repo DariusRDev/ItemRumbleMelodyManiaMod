@@ -222,10 +222,22 @@ public class ItemActions : INeedInjection
     // Displays at the Same Position as the SentenceRating ("great", "good", "bad", "perfect")
     public VisualElement ShowItemRating(PlayerControl targetPlayerControll, string text)
     {
-        VisualElement label = new Label("      " + text);
+        VisualElement label = new Label(text);
 
         label.style.position = Position.Absolute;
-        label.style.unityBackgroundImageTintColor = new StyleColor(Color.blue);
+        if (micProfile != null)
+        {
+            label.style.backgroundColor = new StyleColor(micProfile.Color);
+        }
+        label.style.marginLeft = 19;
+        label.style.paddingBottom = 5;
+        label.style.paddingTop = 5;
+        label.style.paddingLeft = 5;
+        label.style.paddingRight = 5;
+        label.style.borderTopLeftRadius = 8;
+        label.style.borderTopRightRadius = 8;
+        label.style.borderBottomLeftRadius = 8;
+        label.style.borderBottomRightRadius = 8;
         VisualElement targetPlayerScoreLabel = getPlayerScoreLabel(targetPlayerControll);
         Vector2 positionOfScore = targetPlayerScoreLabel.worldBound.position;
         // Move the visual element to the background so that it is not affected by Parents layouting.

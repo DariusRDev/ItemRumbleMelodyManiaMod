@@ -313,7 +313,7 @@ public static class Items
              itemActions.rotateScreen(2);
              itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
                     {
-                        itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
+                        itemActions.ShowItemRating(targetPlayerControl, "Tina Turner");
                     });
          },
         // Get Dictionary from excel sheet
@@ -338,7 +338,7 @@ public static class Items
              itemActions.shakeScreen(2, 0.9f);
              itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
                     {
-                        itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
+                        itemActions.ShowItemRating(targetPlayerControl, "Shaker");
                     });
          },
         // Get Dictionary from excel sheet
