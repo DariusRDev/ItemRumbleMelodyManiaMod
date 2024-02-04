@@ -129,6 +129,15 @@ public class ItemActions : INeedInjection
         return playerControls.OrderByDescending(pc => pc.PlayerScoreControl.TotalScore).First();
     }
 
+    public List<PlayerControl> GetPlayerControlsInFrontOfMe()
+    {
+        List<PlayerControl> playerControls = singSceneControl.PlayerControls;
+        int myPoints = playerControl.PlayerScoreControl.TotalScore;
+        return playerControls
+                .Where(pc => pc.PlayerScoreControl.TotalScore > myPoints)
+                .OrderBy(pc => pc.PlayerScoreControl.TotalScore).ToList();
+    }
+
     public PlayerControl GetInFrontOfMePlayerControl()
     {
         List<PlayerControl> playerControls = singSceneControl.PlayerControls;

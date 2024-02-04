@@ -1,0 +1,77 @@
+name: Automatic Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Configure Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Determine new version and update modinfo.yml
+      run: |
+        # Lesen der aktuellen Version aus modinfo.yml
+        CURRENT_VERSION=$(grep 'version:' modinfo.yml | sed 's/version: //')
+        echo "Aktuelle Version: $CURRENT_VERSION"
+
+        # Inkrementieren der Patch-Version
+        NEW_VERSION=$(echo $CURRENT_VERSION | awk -F. -v OFS=. '{$NF += 1; print}')
+        echo "Neue Version: $NEW_VERSION"
+
+        # Aktualisieren der modinfo.yml mit der neuen Version
+        sed -i "s/version: $CURRENT_VERSION/version: $NEW_VERSION/" modinfo.yml
+
+        # Hinzufügen und Committen der Änderungen
+        git add modinfo.yml
+        git commit -m "Update version to $NEW_VERSION"
+        git push
+
+        # Setzen der neuen Version in der GitHub-Action-Umgebung
+        echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        custom_tag: ${{ env.NEW_VERSION }}
+
+    - name: Archive Release
+      uses: thedoctor0/zip-release@0.7.5
+      with:
+        type: 'zip'
+        filename: 'ItemRumbleMelodyManiaMod.zip'
+        exclusions: '*.git* /*node_modules/* .editorconfig'
+
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ env.NEW_VERSION }}
+        name: Release ${{ env.NEW_VERSION }}
+        artifacts: 'ItemRumbleMelodyManiaMod.zip'
+        body: |
+            # Release ${{ env.NEW_VERSION }}
+            
+            ## Installation Instructions
+            For detailed installation instructions, visit [Melody Mania](https://melodymania.org/how-to-mods).
+    
+            ## Changelog
+            ${{ steps.tag_version.outputs.changelog }}
+    
+            ## Download
+            Download the `ItemRumbleMelodyManiaMod.zip` from the artifacts below.
+    
+
+        
+ 
