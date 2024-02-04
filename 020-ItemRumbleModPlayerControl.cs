@@ -15,7 +15,8 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
     [Inject]
     private Injector injector;
 
-
+    [Inject]
+    private PlayerScoreControl playerScoreControl;
     private ItemActions itemActions;
 
     private List<ItemControl> itemControls = new List<ItemControl>();
@@ -40,6 +41,15 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
             .Subscribe(evt => OnCreatedRecordedNoteControl(evt.RecordedNoteControl, playerControl));
         subscriptions.Add(subscription2);
 
+        var subscription3 = playerScoreControl.NoteScoreEventStream.Subscribe(noteScoreEvent =>
+        {
+            if (noteScoreEvent.NoteScore.IsPerfect)
+            {
+                CollectItem(noteScoreEvent.NoteScore.Note.StartBeat, noteScoreEvent.NoteScore.Note.EndBeat);
+            }
+        });
+
+
         itemActions = new ItemActions();
         injector.Inject(itemActions);
         activeItems = Items.AllItems.Where(it => modSettings.activeItemList.Contains(it.Name)).ToList();
@@ -59,6 +69,10 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     public void Update()
     {
+        if (modSettings.collectOnPerfectNote)
+        {
+            return;
+        }
         List<RecordedNoteControl> recordedNoteControlsCopy = recordedNoteControls.ToList();
         foreach (RecordedNoteControl recordedNoteControl in recordedNoteControlsCopy)
         {
@@ -72,9 +86,15 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         int targetEndBeat = recordedNoteControl.RecordedNote.TargetNote.EndBeat;
         int targetStartBeat = recordedNoteControl.RecordedNote.TargetNote.StartBeat;
         int targetCenterBeat = targetStartBeat + (targetEndBeat - targetStartBeat) / 2;
-        if (Math.Abs(targetCenterBeat - EndBeat) < 1)
+        if (Math.Abs(targetCenterBeat - EndBeat) < 1 && false)
         {
             CollectItem(recordedNoteControl);
+        }
+
+        if (EndBeat < (double)recordedNoteControl.TargetEndBeat && recordedNoteControl.RecordedNote != null && recordedNoteControl.RecordedNote.TargetNote != null && recordedNoteControl.MidiNote == recordedNoteControl.RecordedNote.TargetNote.MidiNote)
+        {
+            CollectItem(recordedNoteControl);
+
         }
     }
 
@@ -86,9 +106,17 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         }
         recordedNoteControls.Remove(recordedNoteControl);
 
+
+        CollectItem(recordedNoteControl.RecordedNote.TargetNote.StartBeat, recordedNoteControl.RecordedNote.TargetNote.EndBeat);
+    }
+
+    private void CollectItem(int StartBeat, int EndBeat)
+    {
+
+
         ItemControl itemControl = itemControls
-            .FirstOrDefault(it => it.TargetNoteControl.Note.StartBeat == recordedNoteControl.RecordedNote.TargetNote.StartBeat
-                                  && it.TargetNoteControl.Note.EndBeat == recordedNoteControl.RecordedNote.TargetNote.EndBeat);
+            .FirstOrDefault(it => it.TargetNoteControl.Note.StartBeat == StartBeat
+                                  && it.TargetNoteControl.Note.EndBeat == EndBeat);
         if (itemControl == null)
         {
             return;
