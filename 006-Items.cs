@@ -322,7 +322,7 @@ public class Items
              // Get the PlayerControl of the affected player.
              PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
              // Add Actions here.
-             itemActions.shakeScreen(2, 0.9f);
+             itemActions.shakeScreen(2, 1.3f);
              itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
                     {
                         itemActions.ShowItemRating(targetPlayerControl, "Shaker");
