@@ -4,6 +4,7 @@ using UniInject;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UniRx;
+using System.IO;
 
 public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolete
 {
@@ -14,6 +15,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
     [Inject]
     private ItemRumbleModModSettings modSettings;
 
+    [Inject]
+    private UiManager uiManager;
 
 
     public List<String> activeItems = new List<String>();
@@ -103,10 +106,24 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             visualElement.Add(itemDivider);
         }
 
+        Button probChangeHelpButton = new Button(() =>
+        {
+            uiManager.CreateInfoDialogControl("Editing Spawn Probabilities",
+                "Spawn probabilities are stored in a CSV file. The first column is the distance to the leading player. After that each column represents the probability for the item at the corresponding distance. The file is located in the mod folder. You can open it with Excel or any text editor.");
+        });
+        probChangeHelpButton.text = "How to Edit Spawn Probabilities?";
+        probChangeHelpButton.AddToClassList("my-2");
+        visualElement.Add(probChangeHelpButton);
+
+        Button openProbFileButton = new Button(() =>
+        {
+            Application.OpenURL(Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv"));
+        });
+        openProbFileButton.text = "Edit Spawn Probabilities (Excel CSV)";
+
+        visualElement.Add(openProbFileButton);
 
         return visualElement;
-
-
     }
 
     public void OnModInstanceBecomesObsolete()
