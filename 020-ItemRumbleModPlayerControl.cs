@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.UIElements;
 using UniRx;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +6,6 @@ using System;
 
 public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedListener
 {
-    public string modFolder;
-
-
-    [Inject]
-    private GameObject gameObject;
-
     [Inject]
     private SingSceneControl singSceneControl;
 
@@ -31,10 +23,12 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     private List<Item> activeItems = new List<Item>();
 
-    public string activeItemNames = "";
+    public ModObjectContext modContext;
 
+    public ItemRumbleModModSettings modSettings;
     private List<IDisposable> subscriptions = new List<IDisposable>();
 
+    private Items items;
 
     public void OnInjectionFinished()
     {
@@ -48,7 +42,8 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
         itemActions = new ItemActions();
         injector.Inject(itemActions);
-        activeItems = Items.AllItems.Where(it => activeItemNames.Contains(it.Name)).ToList();
+        activeItems = Items.AllItems.Where(it => modSettings.activeItemList.Contains(it.Name)).ToList();
+        items = new Items(modContext, modSettings);
     }
 
     public void OnObsolete()
@@ -105,7 +100,6 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
         itemControl.Item.OnCollect(itemActions, itemControl);
 
-        /* UpdateItemsLabel(); */
     }
 
 
@@ -116,10 +110,7 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.scoreData.TotalScore);
         int pointsToFirstPlace = Math.Abs(pointsOfPlayerInFirst - pointsOfPlayer);
 
-        /* if (pointsOfPlayer < 10) // Don't spawn items if the player is too far behind
-        {
-            return;
-        } */
+
         int noteLengthInMilliseconds = (int)(targetNoteControl.Note.Length * 60000 / singSceneControl.SongMeta.BeatsPerMinute);
         if (noteLengthInMilliseconds < 150) // Don't spawn items if the note is too short
         {
@@ -131,8 +122,8 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         {
             return;
         }
-        Item item = Items.SpawnItem(pointsToFirstPlace, activeItems);
-        ItemControl itemControl = new ItemControl(modFolder, targetNoteControl, item);
+        Item item = items.SpawnItem(pointsToFirstPlace, activeItems);
+        ItemControl itemControl = new ItemControl(modContext.ModFolder, targetNoteControl, item);
         itemControls.Add(itemControl);
     }
 

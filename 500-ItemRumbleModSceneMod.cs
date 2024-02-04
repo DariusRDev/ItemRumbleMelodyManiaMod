@@ -9,14 +9,16 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
 {
 
     [Inject]
-    private ModObjectContext modObjectContext;
+    private ModObjectContext modContext;
+
+    [Inject]
+    private ItemRumbleModModSettings modSettings;
 
 
 
     public List<String> activeItems = new List<String>();
 
-    [Inject]
-    private ItemRumbleModModSettings modSettings;
+
 
     public string DisplayName => "Item Rumble";
 
@@ -27,8 +29,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
     public GameRoundModifierControl CreateControl()
     {
         control = GameObjectUtils.CreateGameObjectWithComponent<ItemRumbleGameRoundModifierControl>();
-        control.modFolder = modObjectContext.ModFolder;
-        control.activeItemNames = modSettings.activeItemList;
+        control.modContext = modContext;
+        control.itemRumbleModModSettings = modSettings;
         return control;
 
     }
@@ -87,7 +89,7 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             image.name = item.VisualElementName;
             image.style.width = 25;
             image.style.height = 25;
-            ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
+            ImageManager.LoadSpriteFromUri($"{modContext.ModFolder}/{item.ImagePath}")
                 .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
             row.Add(image);
             visualElement.Add(row);

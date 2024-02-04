@@ -1,11 +1,9 @@
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using UniInject;
-using System;
 
 class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
 {
-    public string modFolder;
 
     [Inject]
     private SingSceneControl singSceneControl;
@@ -13,9 +11,11 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
     [Inject]
     private UIDocument uiDocument;
 
+    public ModObjectContext modContext;
+
+    public ItemRumbleModModSettings itemRumbleModModSettings;
 
     private List<ItemRumbleModPlayerControl> itemRumblePlayerControls = new List<ItemRumbleModPlayerControl>();
-    public String activeItemNames = "";
 
     private void Start()
     {
@@ -29,7 +29,7 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
 
     private void AddStyleSheet()
     {
-        string styleSheetPath = $"{modFolder}/stylesheets/ItemRumbleStyles.uss";
+        string styleSheetPath = $"{modContext.ModFolder}/stylesheets/ItemRumbleStyles.uss";
         StyleSheet styleSheet = StyleSheetUtils.CreateStyleSheetFromFile(styleSheetPath);
         uiDocument.rootVisualElement.styleSheets.Add(styleSheet);
     }
@@ -44,13 +44,11 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
         itemRumblePlayerControls.ForEach(it => it.OnObsolete());
     }
 
-
-
     private void CreateItemCollectorControl(PlayerControl playerControl)
     {
         ItemRumbleModPlayerControl itemCollectorGameModifierPlayerControl = new ItemRumbleModPlayerControl();
-        itemCollectorGameModifierPlayerControl.modFolder = modFolder;
-        itemCollectorGameModifierPlayerControl.activeItemNames = activeItemNames;
+        itemCollectorGameModifierPlayerControl.modContext = modContext;
+        itemCollectorGameModifierPlayerControl.modSettings = itemRumbleModModSettings;
         playerControl.PlayerUiControl.Injector.Inject(itemCollectorGameModifierPlayerControl);
         itemRumblePlayerControls.Add(itemCollectorGameModifierPlayerControl);
     }
