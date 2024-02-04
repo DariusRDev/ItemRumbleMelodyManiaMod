@@ -6,18 +6,14 @@ using System.Collections.Generic;
 // Mod settings are saved to file when the app is closed.
 public class ItemRumbleModModSettings : IModSettings
 {
-    public bool myBool = true;
-    public double myDouble = 12.34;
-    public int myInt = 42;
+    public int percentChanceToSpawnItem = 25;
     public string activeItemList = "";
 
     public List<IModSettingControl> GetModSettingControls()
     {
         return new List<IModSettingControl>()
         {
-            new BoolModSettingControl(() => myBool, newValue => myBool = newValue) { Label = "My Bool" },
-            new DoubleModSettingControl(() => myDouble, newValue => myDouble = newValue) { Label = "My Double" },
-            new IntModSettingControl(() => myInt, newValue => myInt = newValue) { Label = "My Int" },
+             new IntModSettingControl(() => percentChanceToSpawnItem, newValue => percentChanceToSpawnItem = newValue) { Label = "Spawn probability for item on each note (%)" }
         };
     }
 }

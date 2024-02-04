@@ -116,8 +116,9 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
         {
             return;
         }
+        double percentageToSpawnItem = modSettings.percentChanceToSpawnItem;
+        bool spawnItem = UnityEngine.Random.Range(0, 100) < percentageToSpawnItem;
 
-        bool spawnItem = UnityEngine.Random.Range(0, 4) == 0;
         if (!spawnItem) // Only spawn items in 25% of the cases
         {
             return;
