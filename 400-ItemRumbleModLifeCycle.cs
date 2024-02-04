@@ -2,6 +2,7 @@ using UnityEngine;
 using UniInject;
 using UniRx;
 using System.Linq;
+using System.IO;
 
 // Open the mod folder with Visual Studio Code and installed C# Dev Kit for IDE features such as
 // code completion, error markers, parameter hints, go to definition, etc.
@@ -13,16 +14,19 @@ public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod
 
     [Inject]
     private ItemRumbleModModSettings modSettings;
+
+    [Inject]
+    private ModObjectContext modContext;
+
     public void OnLoadMod()
     {
         // You can do anything here, for example ...
 
-        Debug.Log($"{nameof(ItemRumbleModLifeCycle)}.OnLoadMod");
-
-        /* if (modSettings.activeItemList == "")
+        if (!File.Exists(Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv")))
         {
-            modSettings.activeItemList = string.Join(",", Items.AllItems.Select(item => item.Name));
-        } */
+            File.Copy(Path.Combine(modContext.ModFolder, "SpawnProbabilities.csv"), Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv"));
+        }
+
     }
 
     public void OnDisableMod()

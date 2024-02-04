@@ -73,7 +73,7 @@ public class ItemActions : INeedInjection
     {
         LeanTween.value(singSceneControl.gameObject, 1f, speedFactor, 0.5f).setOnUpdate((float val) =>
         {
-            singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+            singSceneControl.songAudioPlayer.SetPlaybackSpeed(val, true);
             singSceneControl.songVideoPlayer.PlaybackSpeed = val;
         });
 
@@ -81,19 +81,20 @@ public class ItemActions : INeedInjection
         {
             LeanTween.value(singSceneControl.gameObject, speedFactor, 1f, 0.5f).setOnUpdate((float val) =>
             {
-                singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+                singSceneControl.songAudioPlayer.SetPlaybackSpeed(val, true);
+
                 singSceneControl.songVideoPlayer.PlaybackSpeed = val;
             });
         });
     }
 
-    public void HideNotesForSeconds(float seconds)
+    public void HideNotesForSeconds(PlayerControl targetPlayerControl, float seconds)
     {
         LeanTween.delayedCall(seconds + 1.6f, () =>
         {
-            playerControl.PlayerUiControl.NoteDisplayer.FadeIn(0.8f);
+            targetPlayerControl.PlayerUiControl.NoteDisplayer.FadeIn(0.8f);
         });
-        playerControl.PlayerUiControl.NoteDisplayer.FadeOut(0.8f);
+        targetPlayerControl.PlayerUiControl.NoteDisplayer.FadeOut(0.8f);
     }
     public void BouncePlayerScoreLabel(PlayerControl targetPlayerControl, float scale = 1.5f)
     {
@@ -127,6 +128,15 @@ public class ItemActions : INeedInjection
     {
         List<PlayerControl> playerControls = singSceneControl.PlayerControls;
         return playerControls.OrderByDescending(pc => pc.PlayerScoreControl.TotalScore).First();
+    }
+
+    public List<PlayerControl> GetPlayerControlsInFrontOfMe()
+    {
+        List<PlayerControl> playerControls = singSceneControl.PlayerControls;
+        int myPoints = playerControl.PlayerScoreControl.TotalScore;
+        return playerControls
+                .Where(pc => pc.PlayerScoreControl.TotalScore > myPoints)
+                .OrderBy(pc => pc.PlayerScoreControl.TotalScore).ToList();
     }
 
     public PlayerControl GetInFrontOfMePlayerControl()

@@ -4,19 +4,24 @@ using UniInject;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UniRx;
+using System.IO;
 
 public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolete
 {
 
     [Inject]
-    private ModObjectContext modObjectContext;
+    private ModObjectContext modContext;
 
+    [Inject]
+    private ItemRumbleModModSettings modSettings;
+
+    [Inject]
+    private UiManager uiManager;
 
 
     public List<String> activeItems = new List<String>();
 
-    [Inject]
-    private ItemRumbleModModSettings modSettings;
+
 
     public string DisplayName => "Item Rumble";
 
@@ -27,8 +32,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
     public GameRoundModifierControl CreateControl()
     {
         control = GameObjectUtils.CreateGameObjectWithComponent<ItemRumbleGameRoundModifierControl>();
-        control.modFolder = modObjectContext.ModFolder;
-        control.activeItemNames = modSettings.activeItemList;
+        control.modContext = modContext;
+        control.itemRumbleModModSettings = modSettings;
         return control;
 
     }
@@ -87,7 +92,7 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             image.name = item.VisualElementName;
             image.style.width = 25;
             image.style.height = 25;
-            ImageManager.LoadSpriteFromUri($"{modObjectContext.ModFolder}/{item.ImagePath}")
+            ImageManager.LoadSpriteFromUri($"{modContext.ModFolder}/{item.ImagePath}")
                 .Subscribe(sprite => image.style.backgroundImage = new StyleBackground(sprite));
             row.Add(image);
             visualElement.Add(row);
@@ -101,10 +106,26 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             visualElement.Add(itemDivider);
         }
 
+        IntModSettingControl intModSettingControl = new IntModSettingControl(() => modSettings.percentChanceToSpawnItem, newValue => modSettings.percentChanceToSpawnItem = newValue) { Label = "Spawn probability for item on each note (%)" };
+        visualElement.Add(intModSettingControl.CreateVisualElement());
+        Button probChangeHelpButton = new Button(() =>
+        {
+            uiManager.CreateInfoDialogControl("Editing Spawn Probabilities",
+                "Spawn probabilities are stored in a CSV file. The first column is the distance to the leading player. After that each column represents the probability for the item at the corresponding distance. The file is located in the mod folder. You can open it with Excel or any text editor.");
+        });
+        probChangeHelpButton.text = "How to Edit Spawn Probabilities?";
+        probChangeHelpButton.AddToClassList("my-2");
+        visualElement.Add(probChangeHelpButton);
+
+        Button openProbFileButton = new Button(() =>
+        {
+            Application.OpenURL(Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv"));
+        });
+        openProbFileButton.text = "Edit Spawn Probabilities (Excel CSV)";
+
+        visualElement.Add(openProbFileButton);
 
         return visualElement;
-
-
     }
 
     public void OnModInstanceBecomesObsolete()

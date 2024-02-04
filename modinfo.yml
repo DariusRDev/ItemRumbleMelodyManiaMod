@@ -10,3 +10,7 @@ requiredAssemblies:
   - UnityEngine.VideoModule
   - UnityEngine.ParticleSystemModule
   - com.achimmihca.scenechangeanimations
+requiredTypes:
+  - System.IO.FileShare
+  - System.IO.StreamReader
+  

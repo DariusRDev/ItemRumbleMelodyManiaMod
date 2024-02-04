@@ -13,8 +13,6 @@ public class Item
     // Has to be object, because of loading order of cs files.
     public Action<object, object> OnCollectAction { get; set; } = (object itemActionsObject, object itemControlObject) => { };
 
-    // Dictionary to store spawn probability thresholds and probabilities
-    public Dictionary<int, float> SpawnProbabilities { get; set; } = new Dictionary<int, float>();
 
 
     public Item(string name, string description = "")
