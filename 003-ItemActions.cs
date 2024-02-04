@@ -73,7 +73,7 @@ public class ItemActions : INeedInjection
     {
         LeanTween.value(singSceneControl.gameObject, 1f, speedFactor, 0.5f).setOnUpdate((float val) =>
         {
-            singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+            singSceneControl.songAudioPlayer.SetPlaybackSpeed(val, true);
             singSceneControl.songVideoPlayer.PlaybackSpeed = val;
         });
 
@@ -81,7 +81,8 @@ public class ItemActions : INeedInjection
         {
             LeanTween.value(singSceneControl.gameObject, speedFactor, 1f, 0.5f).setOnUpdate((float val) =>
             {
-                singSceneControl.songAudioPlayer.PlaybackSpeed = val;
+                singSceneControl.songAudioPlayer.SetPlaybackSpeed(val, true);
+
                 singSceneControl.songVideoPlayer.PlaybackSpeed = val;
             });
         });

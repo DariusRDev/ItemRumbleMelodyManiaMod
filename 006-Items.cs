@@ -240,7 +240,7 @@ public static class Items
             // Get the PlayerControl of the affected player.
             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
             // Add Actions here.
-            itemActions.ChangePlaybackSpeed(3);
+            itemActions.ChangePlaybackSpeed(3, 1.15f);
             itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.8f, () =>
              {
                  itemActions.ShowItemRating(targetPlayerControl, "Stari Speed Up");
@@ -264,7 +264,7 @@ public static class Items
              // Get the PlayerControl of the affected player.
              PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
              // Add Actions here.
-             itemActions.ChangePlaybackSpeed(3, 0.5f);
+             itemActions.ChangePlaybackSpeed(3, 0.85f);
              itemActions.MoveToCenterAndFadeOut(itemControl, targetPlayerControl, 0.9f, () =>
               {
                   itemActions.ShowItemRating(targetPlayerControl, "Snaili Slow Down");
