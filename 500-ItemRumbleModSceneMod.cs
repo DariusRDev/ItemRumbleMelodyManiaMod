@@ -106,6 +106,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             visualElement.Add(itemDivider);
         }
 
+        IntModSettingControl intModSettingControl = new IntModSettingControl(() => modSettings.percentChanceToSpawnItem, newValue => modSettings.percentChanceToSpawnItem = newValue) { Label = "Spawn probability for item on each note (%)" };
+        visualElement.Add(intModSettingControl.CreateVisualElement());
         Button probChangeHelpButton = new Button(() =>
         {
             uiManager.CreateInfoDialogControl("Editing Spawn Probabilities",
