@@ -15,14 +15,15 @@ In this mod, we've introduced dynamic item spawning based on your score distance
 | Blue Shelli | Deducts 250 Points from the player in first place | <img src="images/items/shells/blue_shell.png" width="100"> |
 | Green Shelli | Deducts 50 points from a random player | <img src="images/items/shells/green_shell.png" width="100"> |
 | Red Shelli | Deducts 75 points the player in front of you | <img src="images/items/shells/red_shell.png" width="100"> |
-| Flashi | Mutes audio for 2 seconds | <img src="images/items/lightning.png" width="100"> |
-| Ghosti | Makes lyrics invisible for 5 seconds | <img src="images/items/ghost.png" width="100"> |
+| Flash | Mutes audio for 2 seconds | <img src="images/items/lightning.png" width="100"> |
+| Ghost | Makes lyrics invisible for 5 seconds | <img src="images/items/ghost.png" width="100"> |
 | Mushi Mushroom | Gives you 250 points | <img src="images/items/mushroom.png" width="100"> |
 | Rocki Rocket | Gives you 500 points | <img src="images/items/rocket.png" width="100"> |
-| Stari | Speeds up the song for 3 seconds | <img src="images/items/star.png" width="100"> |
-| Snaili | Slows down the song for 3 seconds | <img src="images/items/snaili.png" width="100"> |
-| Note Eraseri | Hides the notes of the collecting player for 5 seconds | <img src="images/items/eraser.png" width="100"> |
-
+| Star | Speeds up the song for 3 seconds | <img src="images/items/star.png" width="100"> |
+| Snail | Slows down the song for 3 seconds | <img src="images/items/snaili.png" width="100"> |
+| Note Eraser | Hides the notes of all players with more points then the colletor for 5 seconds | <img src="images/items/eraser.png" width="100"> |
+| Tina Turne | Rotates the Screen 360° | <img src="images/items/rotateScreen.png" width="100"> |
+| Shaker | Rotates the Screen 360° | <img src="images/items/shakescreen.png" width="100"> |
 
 ## Videos
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd

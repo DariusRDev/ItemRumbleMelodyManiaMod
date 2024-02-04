@@ -87,13 +87,13 @@ public class ItemActions : INeedInjection
         });
     }
 
-    public void HideNotesForSeconds(float seconds)
+    public void HideNotesForSeconds(PlayerControl targetPlayerControl, float seconds)
     {
         LeanTween.delayedCall(seconds + 1.6f, () =>
         {
-            playerControl.PlayerUiControl.NoteDisplayer.FadeIn(0.8f);
+            targetPlayerControl.PlayerUiControl.NoteDisplayer.FadeIn(0.8f);
         });
-        playerControl.PlayerUiControl.NoteDisplayer.FadeOut(0.8f);
+        targetPlayerControl.PlayerUiControl.NoteDisplayer.FadeOut(0.8f);
     }
     public void BouncePlayerScoreLabel(PlayerControl targetPlayerControl, float scale = 1.5f)
     {

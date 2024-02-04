@@ -133,7 +133,7 @@ public static class Items
         SpawnProbabilities = RedShelliSpawnProbabilities
     };
 
-    public static readonly Item Flashi = new Item("Flashi")
+    public static readonly Item Flashi = new Item("Flash")
     {
         Description = "Mutes audio for 2 seconds",
         ImagePath = "images/items/lightning.png",
@@ -157,7 +157,7 @@ public static class Items
         SpawnProbabilities = FlashiSpawnProbabilities,
     };
 
-    public static readonly Item Ghosti = new Item("Ghosti")
+    public static readonly Item Ghosti = new Item("Ghost")
     {
         Description = "Makes lyrics invisible for 5 seconds",
         ImagePath = "images/items/ghost.png",
@@ -226,7 +226,7 @@ public static class Items
     };
 
 
-    public static readonly Item Stari = new Item("Stari")
+    public static readonly Item Stari = new Item("Star")
     {
         Description = "Speeds up the song for 3 seconds",
         ImagePath = "images/items/star.png",
@@ -250,7 +250,7 @@ public static class Items
         SpawnProbabilities = StariSpawnProbabilities,
     };
 
-    public static readonly Item Snaili = new Item("Snaili")
+    public static readonly Item Snaili = new Item("Snail")
     {
         Description = "Slows down the song for 3 seconds",
         ImagePath = "images/items/snaili.png",
@@ -274,7 +274,7 @@ public static class Items
         SpawnProbabilities = SnailiSpawnProbabilities,
     };
 
-    public static readonly Item Eraser = new Item("Note Eraseri")
+    public static readonly Item Eraser = new Item("Note Eraser")
     {
         Description = "Hides the Notes of the Collecting Player for 5 seconds",
         ImagePath = "images/items/eraser.png",
@@ -286,10 +286,21 @@ public static class Items
              var itemActions = (ItemActions)itemActionsObject;
              var itemControl = (ItemControl)itemControlObject;
              // Get the PlayerControl of the affected player.
-             PlayerControl targetPlayerControl = itemActions.GetMyPlayerControll();
+             List<PlayerControl> targetPlayerControls = itemActions.GetPlayerControlsInFrontOfMe();
+             PlayerControl collectingPlayerControl = itemActions.GetMyPlayerControll();
+
              // Add Actions here.
-             itemActions.HideNotesForSeconds(5);
-             itemActions.AnimateItemCollection(targetPlayerControl, itemControl, "Note Eraser");
+             foreach (PlayerControl playerControl in targetPlayerControls)
+             {
+                 itemActions.HideNotesForSeconds(playerControl, 5);
+             }
+             if (targetPlayerControls.Count == 0)
+             {
+
+                 itemActions.HideNotesForSeconds(collectingPlayerControl, 5);
+             }
+
+             itemActions.AnimateItemCollection(collectingPlayerControl, itemControl, "Note Eraser");
          },
         // Get Dictionary from excel sheet
         SpawnProbabilities = EraserSpawnProbabilities,
