@@ -13,4 +13,6 @@ requiredAssemblies:
 requiredTypes:
   - System.IO.FileShare
   - System.IO.StreamReader
+  - UnityEngine.FontStyle
+  - UnityEngine.Font
   

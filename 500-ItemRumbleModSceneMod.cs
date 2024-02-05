@@ -49,8 +49,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
 
     public VisualElement CreateConfigurationVisualElement()
     {
-        activeItems = new List<String>(modSettings.activeItemList.Split(','));
-
+        activeItems = new List<string>(modSettings.activeItemList.Split(','));
+        VisualElement parent = new VisualElement();
         var visualElement = new VisualElement();
         var label = new Label("Item Rumble Mod Settings");
         label.style.fontSize = 10;
@@ -89,7 +89,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
             { Label = item.Name };
             row.Add(checkbox.CreateVisualElement());
             var image = new VisualElement();
-            image.name = item.VisualElementName;
             image.style.width = 25;
             image.style.height = 25;
             ImageManager.LoadSpriteFromUri($"{modContext.ModFolder}/{item.ImagePath}")
@@ -124,8 +123,8 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
         openProbFileButton.text = "Edit Spawn Probabilities (Excel CSV)";
 
         visualElement.Add(openProbFileButton);
-
-        return visualElement;
+        parent.Add(visualElement);
+        return parent;
     }
 
     public void OnModInstanceBecomesObsolete()
