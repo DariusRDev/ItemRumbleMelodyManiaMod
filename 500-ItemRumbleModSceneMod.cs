@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using UniRx;
 using System.IO;
 
-public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolete
+public class ItemRumbleModSceneMod : IGameRoundMod
 {
 
     [Inject]
@@ -35,14 +35,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
         control.modContext = modContext;
         control.itemRumbleModModSettings = modSettings;
         return control;
-
-    }
-
-    private void OnObsolete()
-    {
-        control.OnObsolete();
-        GameObjectUtils.Destroy(control);
-        // destroy this
 
     }
 
@@ -127,16 +119,6 @@ public class ItemRumbleModSceneMod : IGameRoundMod, IOnModInstanceBecomesObsolet
         return parent;
     }
 
-    public void OnModInstanceBecomesObsolete()
-    {
-        try
-        {
-            OnObsolete();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-    }
+
 }
 
