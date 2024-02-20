@@ -17,6 +17,9 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     [Inject]
     private PlayerScoreControl playerScoreControl;
+
+    [Inject]
+    private PlayerPerformanceAssessmentControl playerPerformanceAssessmentControl;
     private ItemActions itemActions;
 
     private List<ItemControl> itemControls = new List<ItemControl>();
@@ -41,13 +44,13 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
             .Subscribe(evt => OnCreatedRecordedNoteControl(evt.RecordedNoteControl, playerControl));
         subscriptions.Add(subscription2);
 
-        var subscription3 = playerScoreControl.NoteScoreEventStream.Subscribe(noteScoreEvent =>
-        {
-            if (noteScoreEvent.NoteScore.IsPerfect)
-            {
-                CollectItem(noteScoreEvent.NoteScore.Note.StartBeat, noteScoreEvent.NoteScore.Note.EndBeat);
-            }
-        });
+        var subscription3 = playerPerformanceAssessmentControl.NoteAssessedEventStream.Subscribe(noteScoreEvent =>
+       {
+           if (noteScoreEvent.IsPerfect)
+           {
+               CollectItem(noteScoreEvent.Note.StartBeat, noteScoreEvent.Note.EndBeat);
+           }
+       });
 
 
         itemActions = new ItemActions();
@@ -134,8 +137,8 @@ public class ItemRumbleModPlayerControl : INeedInjection, IInjectionFinishedList
 
     private void OnCreatedTargetNoteControl(TargetNoteControl targetNoteControl, PlayerControl playerControl)
     {
-        int pointsOfPlayer = playerControl.PlayerScoreControl.scoreData.TotalScore;
-        int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.scoreData.TotalScore);
+        int pointsOfPlayer = playerControl.PlayerScoreControl.TotalScore;
+        int pointsOfPlayerInFirst = singSceneControl.PlayerControls.Max(it => it.PlayerScoreControl.TotalScore);
         int pointsToFirstPlace = Math.Abs(pointsOfPlayerInFirst - pointsOfPlayer);
 
 

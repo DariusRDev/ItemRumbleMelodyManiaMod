@@ -34,11 +34,12 @@ public class ItemActions : INeedInjection
 
     public void AddScore(PlayerControl targetPlayerControl, int points)
     {
-        if (points < 0 && targetPlayerControl.PlayerScoreControl.ModTotalScore < Mathf.Abs(points))
+
+        if (points < 0 && targetPlayerControl.PlayerScoreControl.CalculationData.ModTotalScore < Mathf.Abs(points))
         {
             return;
         }
-        targetPlayerControl.PlayerScoreControl.ModTotalScore += points;
+        targetPlayerControl.PlayerScoreControl.SetModTotalScore(targetPlayerControl.PlayerScoreControl.CalculationData.ModTotalScore + points);
         targetPlayerControl.PlayerUiControl.ShowTotalScore(targetPlayerControl.PlayerScoreControl.TotalScore);
 
         Debug.Log($"Added {points} points to score of player '{targetPlayerControl.PlayerProfile?.Name}'");

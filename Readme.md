@@ -23,7 +23,7 @@ In this mod, we've introduced dynamic item spawning based on your score distance
 | Snail | Slows down the song for 3 seconds | <img src="images/items/snaili.png" width="100"> |
 | Note Eraser | Hides the notes of all players with more points then the colletor for 5 seconds | <img src="images/items/eraser.png" width="100"> |
 | Tina Turne | Rotates the Screen 360° | <img src="images/items/rotateScreen.png" width="100"> |
-| Shaker | Rotates the Screen 360° | <img src="images/items/shakescreen.png" width="100"> |
+| Shaker | Shakes the Screen | <img src="images/items/shakescreen.png" width="100"> |
 
 ## Videos
 https://github.com/DerDorius/ItemRumbleMelodyManiaMod/assets/77979816/2639ed17-65d8-4c08-a717-0ce1d9b593fd

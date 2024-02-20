@@ -9,7 +9,7 @@ using System.IO;
 // ---
 // Mods must implement subtypes of special mod interfaces.
 // Available interfaces can be found by executing 'mod.interfaces' in the game's console.
-public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod
+public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod, IOnModInstanceBecomesObsolete
 {
 
     [Inject]
@@ -17,6 +17,9 @@ public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod
 
     [Inject]
     private ModObjectContext modContext;
+
+    [Inject]
+    private NonPersistentSettings nonPersistentSettings;
 
     public void OnLoadMod()
     {
@@ -32,5 +35,10 @@ public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod
     public void OnDisableMod()
     {
         Debug.Log($"{nameof(ItemRumbleModLifeCycle)}.OnDisableMod");
+    }
+
+    public void OnModInstanceBecomesObsolete()
+    {
+        nonPersistentSettings.GameRoundSettings.modifiers.Clear();
     }
 }
