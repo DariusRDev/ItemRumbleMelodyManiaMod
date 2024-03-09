@@ -13,6 +13,7 @@
              These libraries are loaded when the mod is loaded.
              They can be accessed by the mod without further configuration. -->
         <Reference Include="*.dll" />
+        <Compile Remove="build\**" />
 
         <Compile Include="*.cs"/>
     </ItemGroup>

@@ -51,7 +51,7 @@ class ItemRumbleGameRoundModifierControl : GameRoundModifierControl
 
             float centerPosition = singSceneControl.background.layout.width / 2;
 
-            Label rumbleLabel = new Label("Rumble");
+            Label rumbleLabel = new Label("Rumbles");
             rumbleLabel.style.fontSize = 100;
             rumbleLabel.style.position = Position.Absolute;
             rumbleLabel.style.left = -singSceneControl.background.layout.width; // Start from the left

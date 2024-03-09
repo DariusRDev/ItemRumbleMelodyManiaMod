@@ -27,6 +27,9 @@ public class ItemRumbleModLifeCycle : IOnLoadMod, IOnDisableMod, IOnModInstanceB
 
         if (!File.Exists(Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv")))
         {
+            // if folder does not exist, create it
+            Directory.CreateDirectory(modContext.ModPersistentDataFolder);
+
             File.Copy(Path.Combine(modContext.ModFolder, "SpawnProbabilities.csv"), Path.Combine(modContext.ModPersistentDataFolder, "SpawnProbabilities.csv"));
         }
 

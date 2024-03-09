@@ -41,7 +41,21 @@ public class ItemRumbleModSceneMod : IGameRoundMod
 
     public VisualElement CreateConfigurationVisualElement()
     {
+
+
         activeItems = new List<string>(modSettings.activeItemList.Split(','));
+        Debug.Log("Active Items: " + string.Join(",", activeItems));
+        Debug.Log("Item coutn" + activeItems.Count);
+        if (activeItems.Count == 1)
+        {
+            Debug.Log("No active items found, adding all items to active list");
+            foreach (Item item in Items.AllItems)
+            {
+                activeItems.Add(item.Name);
+                modSettings.activeItemList = string.Join(",", activeItems);
+            }
+        }
+
         VisualElement parent = new VisualElement();
         var visualElement = new VisualElement();
         var label = new Label("Item Rumble Mod Settings");

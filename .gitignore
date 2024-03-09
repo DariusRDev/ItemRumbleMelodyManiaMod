@@ -2,6 +2,7 @@
 bin/
 obj/
 *.sln
+build
 
 # Ignore Unity meta files
 *.meta
